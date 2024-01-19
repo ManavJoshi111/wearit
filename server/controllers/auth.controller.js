@@ -1,6 +1,7 @@
 const { client } = require("../DB/db");
 const md5 = require("md5");
-const { generateJWT } = require("../utils/JWTUtil");
+const { ObjectId } = require("mongodb");
+const { generateJWT, verifyJWT } = require("../utils/JWTUtil");
 const {
   authValidator: { registerValidator, loginValidator },
 } = require("../validators");
@@ -22,7 +23,6 @@ exports.register = async (ctx) => {
       ctx.response.status = 400;
       ctx.response.body = {
         error: "An account associated with this email id already exists",
-        user: userExists,
       };
       return;
     }
@@ -31,10 +31,10 @@ exports.register = async (ctx) => {
       firstName,
       lastName,
       email,
-      hashedPassword,
+      password: hashedPassword,
       type,
     });
-    const jwt = await generateJWT({ p: result.insertedId });
+    const jwt = await generateJWT({ _id: result.insertedId });
     session.commitTransaction();
     ctx.response.status = 200;
     ctx.response.body = {
@@ -63,7 +63,7 @@ exports.login = async (ctx) => {
       ctx.response.body = { error: "Please provide credentials!" };
     }
     const hashedPassword = md5(password);
-    const user = await User.findOne({ email, hashedPassword });
+    const user = await User.findOne({ email, password: hashedPassword });
     if (!user) {
       ctx.response.status = 404;
       ctx.response.body = {
@@ -71,11 +71,11 @@ exports.login = async (ctx) => {
       };
       return;
     }
-    const jwt = await generateJWT({ p: user._id });
+    const jwt = await generateJWT({ _id: user._id });
     session.commitTransaction();
     ctx.response.status = 200;
     ctx.response.body = {
-      message: "You are loggedin successfully",
+      message: "Login successful!",
       token: jwt,
     };
   } catch (err) {
@@ -87,5 +87,38 @@ exports.login = async (ctx) => {
     };
   } finally {
     session.endSession();
+  }
+};
+
+exports.getUser = async (ctx) => {
+  try {
+    const { token } = ctx.request?.body;
+    const payload = await verifyJWT(token);
+    const { _id } = payload;
+    console.log("id : ", _id);
+    const user = await User.findOne(
+      { _id: new ObjectId(_id) },
+      {
+        projection: { _id: 0, password: 0 },
+      }
+    );
+    console.log("user: ", user);
+    if (!user) {
+      ctx.response.status = 404;
+      ctx.response.body = {
+        error: "User not found!",
+        user: null,
+      };
+      return;
+    }
+    ctx.response.status = 200;
+    ctx.response.body = { user };
+  } catch (err) {
+    console.log("error in getuser: ", err);
+    ctx.response.status = 500;
+    ctx.response.body = {
+      error: "Internal server error",
+      user: null,
+    };
   }
 };

@@ -6,5 +6,6 @@ const router = new Router({
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.post("/get-user", authController.getUser);
 
 module.exports = router;
