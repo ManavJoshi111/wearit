@@ -1,9 +1,10 @@
 const Router = require("@koa/router");
-const middleware = require("../middlewares/auth.middleware");
-const router = new Router();
-
-router.get("/login", middleware, (ctx, next) => {
-  console.log("in login");
+const { authController } = require("../controllers");
+const router = new Router({
+  prefix: "/api/auth",
 });
+
+router.post("/register", authController.register);
+router.post("/login", authController.login);
 
 module.exports = router;
