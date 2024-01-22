@@ -10,10 +10,12 @@ const User = client.db("wearit").collection("users");
 exports.register = async (ctx) => {
   const session = client.startSession();
   session.startTransaction();
+  console.log("body: ", ctx.request.body);
   try {
     const { firstName, lastName, email, password, type } = ctx.request.body;
     const { error } = registerValidator.validate(ctx.request.body);
     if (error) {
+      console.log("error: ", error);
       ctx.response.status = 400;
       ctx.response.body = { error: error?.details[0]?.message };
       return;
@@ -58,9 +60,12 @@ exports.login = async (ctx) => {
   session.startTransaction();
   try {
     const { email, password } = ctx.request.body;
-    if (!email || !password) {
+    const { error } = loginValidator.validate(ctx.request.body);
+    if (error) {
+      console.log("error: ", error);
       ctx.response.status = 400;
-      ctx.response.body = { error: "Please provide credentials!" };
+      ctx.response.body = { error: error?.details[0]?.message };
+      return;
     }
     const hashedPassword = md5(password);
     const user = await User.findOne({ email, password: hashedPassword });

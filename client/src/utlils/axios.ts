@@ -8,20 +8,10 @@ const instance = axios.create({
   },
 });
 
-export const get = async (url: string, params = {}) => {
-  try {
-    const response = await instance.get(url, { params });
-    return response.data;
-  } catch (err: any) {
-    throw err.response.data;
-  }
+export const get = async (url: string, params: Object = {}): Promise<any> => {
+  return await instance.get(url, { params });
 };
 
-export const post = async (url: string, data = {}) => {
-  try {
-    const response = await instance.post(url, data);
-    return response.data;
-  } catch (err: any) {
-    throw err.response.data;
-  }
+export const post = async (url: string, data: Object = {}): Promise<any> => {
+  return await instance.post(url, data);
 };
