@@ -27,12 +27,11 @@ export const loginUser = createAsyncThunk(
 
 export const getUserData = createAsyncThunk(
   "user/getUserData",
-  async ({}, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const res = await post("/api/auth/get-user", {
         token: localStorage.getItem("token"),
       });
-      console.log("result: ", res.data);
       return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data);

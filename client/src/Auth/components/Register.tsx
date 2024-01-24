@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { registerUser } from "../actions/user.action";
+import { getUserData, registerUser } from "../actions/user.action";
 import { AppDispatch } from "../../store";
 import { Container, Form, Button } from "react-bootstrap";
 import { SuccessToast, ErrorToast } from "../../utlils/CustomToast";
@@ -16,6 +16,7 @@ type FormData = {
 };
 
 const Register = () => {
+  const { user } = useSelector((state: any) => state.user);
   const [formData, setFormData] = useState<FormData>({});
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -37,12 +38,28 @@ const Register = () => {
       console.log("data: ", data);
       SuccessToast(data);
       localStorage.setItem("token", data.token);
+      await dispatch(getUserData());
       navigate("/");
     } catch (err: any) {
       console.log("err: ", err);
       ErrorToast(err);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      ErrorToast("You are already logged in");
+      navigate("/");
+    }
+  }, []);
+
+  if (user) {
+    return (
+      <>
+        <h1>You are alrady loggedin</h1>
+      </>
+    );
+  }
 
   return (
     <Container className="mt-5 p-4 border border-2 w-50 shadow" fluid>

@@ -11,7 +11,11 @@ interface UserState {
   loading?: Boolean;
 }
 
-const initialState: UserState = {};
+const initialState: UserState = {
+  user: undefined,
+  error: undefined,
+  loading: false,
+};
 
 const userSlice = createSlice({
   name: "user",

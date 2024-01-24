@@ -97,7 +97,16 @@ exports.login = async (ctx) => {
 
 exports.getUser = async (ctx) => {
   try {
+    console.log("getuser: ", ctx.request.body);
     const { token } = ctx.request?.body;
+    if (!token) {
+      ctx.response.status = 400;
+      ctx.response.body = {
+        error: "Token not found!",
+        user: null,
+      };
+      return;
+    }
     const payload = await verifyJWT(token);
     const { _id } = payload;
     console.log("id : ", _id);

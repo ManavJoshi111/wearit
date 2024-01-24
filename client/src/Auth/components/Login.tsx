@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store";
-import { loginUser } from "../actions/user.action";
+import { getUserData, loginUser } from "../actions/user.action";
 import { ErrorToast, SuccessToast } from "../../utlils/CustomToast";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ type FormData = {
 };
 
 const Login = () => {
+  const { user } = useSelector((state: any) => state.user);
   const [formData, setFormData] = useState<FormData>({});
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -33,12 +34,28 @@ const Login = () => {
       console.log("data: ", data);
       SuccessToast(data);
       localStorage.setItem("token", data.token);
+      await dispatch(getUserData());
       navigate("/");
     } catch (err: any) {
       console.log("err: ", err);
       ErrorToast(err);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      ErrorToast("You are already logged in");
+      navigate("/");
+    }
+  }, []);
+
+  if (user) {
+    return (
+      <>
+        <h1>You are alrady loggedin</h1>
+      </>
+    );
+  }
 
   return (
     <Container
