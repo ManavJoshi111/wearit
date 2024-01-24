@@ -1,3 +1,3 @@
-import userSlice from "./auth.reducer";
+import userSlice from "./user.reducer";
 
 export { userSlice };
