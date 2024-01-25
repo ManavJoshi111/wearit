@@ -2,20 +2,15 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 type PropType = {
+  type?: string;
   component: React.FC;
   props?: any;
 };
 
-const PrivateRoute = ({ component, props }: PropType) => {
-  const { user, loading, error } = useSelector((state: any) => state.user);
+const PrivateRoute = ({ component, type, props }: PropType) => {
   const Component = component;
-  if (!user && !loading && !error) {
-    if (localStorage.getItem("token")) {
-      return <h1>Loading...</h1>;
-    } else {
-      return <Navigate to="/login" />;
-    }
-  }
+  const { user, loading, error } = useSelector((state: any) => state.user);
+
   if (loading) {
     return (
       <>
@@ -28,10 +23,32 @@ const PrivateRoute = ({ component, props }: PropType) => {
         <h1>Error</h1>
       </>
     );
-  } else if (!user) {
-    return <Navigate to="/login" />;
+  }
+  if (user) {
+    switch (type) {
+      case "buyer": {
+        return user.type === "buyer" ? (
+          <Component {...props} />
+        ) : (
+          <Navigate to="/login" />
+        );
+      }
+      case "seller": {
+        return user.type === "seller" ? (
+          <Component {...props} />
+        ) : (
+          <Navigate to="/login" />
+        );
+      }
+      case "common-protected": {
+        return <Component {...props} />;
+      }
+      default: {
+        return <Navigate to="/" />;
+      }
+    }
   } else {
-    return <Component {...props} />;
+    return <Navigate to="/login" />;
   }
 };
 

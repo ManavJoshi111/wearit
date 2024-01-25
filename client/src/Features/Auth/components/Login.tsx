@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../store";
+import { AppDispatch } from "../../../store";
 import { getUserData, loginUser } from "../actions/user.action";
-import { ErrorToast, SuccessToast } from "../../utlils/CustomToast";
+import {
+  ErrorToast,
+  SuccessToast,
+} from "../../../customComponents/CustomToast";
 import { NavLink, useNavigate } from "react-router-dom";
 
 type FormData = {
@@ -41,12 +44,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log("useeffect: ", user);
     if (user) {
       ErrorToast("You are already logged in");
       navigate("/");
     }
-  }, []);
+  });
 
   if (user) {
     return (

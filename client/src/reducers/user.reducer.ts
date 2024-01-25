@@ -3,7 +3,7 @@ import {
   getUserData,
   loginUser,
   registerUser,
-} from "../Auth/actions/user.action";
+} from "../Features/Auth/actions/user.action";
 
 interface UserState {
   user?: Object;
@@ -22,8 +22,20 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
+      console.log(
+        "state in logout reducer: ",
+        state.user,
+        state.loading,
+        state.error
+      );
       localStorage.removeItem("token");
       state.user = state.loading = state.error = undefined;
+      console.log(
+        "state in logout reducer 2: ",
+        state.user,
+        state.loading,
+        state.error
+      );
     },
   },
   extraReducers: (builder) => {

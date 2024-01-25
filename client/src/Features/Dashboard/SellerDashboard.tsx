@@ -1,10 +1,8 @@
-import CustomNavbar from "../components/CustomNavbar";
-
 type Prop = {
   prop?: string;
 };
 
-const Home: React.FC<Prop> = ({ prop }) => {
+const SellerDashboard: React.FC<Prop> = ({ prop }) => {
   return (
     <>
       <h1>{prop}</h1>
@@ -13,4 +11,4 @@ const Home: React.FC<Prop> = ({ prop }) => {
   );
 };
 
-export default Home;
+export default SellerDashboard;

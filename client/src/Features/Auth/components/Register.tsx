@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getUserData, registerUser } from "../actions/user.action";
-import { AppDispatch } from "../../store";
+import { AppDispatch } from "../../../store";
 import { Container, Form, Button } from "react-bootstrap";
-import { SuccessToast, ErrorToast } from "../../utlils/CustomToast";
+import {
+  SuccessToast,
+  ErrorToast,
+} from "../../../customComponents/CustomToast";
 
 type FormData = {
   firstName?: string;

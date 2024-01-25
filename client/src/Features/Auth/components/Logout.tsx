@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../reducers/user.reducer";
+import { logoutUser } from "../../../reducers/user.reducer";
 import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
@@ -10,6 +10,7 @@ const Logout = () => {
     try {
       if (localStorage.getItem("token")) {
         dispatch(logoutUser());
+        navigate("/login");
       } else {
         console.log("no token found");
         navigate("/login");
