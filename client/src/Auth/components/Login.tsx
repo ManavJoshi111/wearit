@@ -29,9 +29,7 @@ const Login = () => {
   ): Promise<void> => {
     e.preventDefault();
     try {
-      console.log("formdata: ", formData);
       const data = await dispatch(loginUser(formData)).unwrap();
-      console.log("data: ", data);
       SuccessToast(data);
       localStorage.setItem("token", data.token);
       await dispatch(getUserData());
@@ -43,6 +41,7 @@ const Login = () => {
   };
 
   useEffect(() => {
+    console.log("useeffect: ", user);
     if (user) {
       ErrorToast("You are already logged in");
       navigate("/");

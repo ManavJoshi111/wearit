@@ -5,9 +5,9 @@ type PropType = {
   component: React.FC;
   props?: any;
 };
+
 const PrivateRoute = ({ component, props }: PropType) => {
   const { user, loading, error } = useSelector((state: any) => state.user);
-  console.log("state: ", loading, error, user);
   const Component = component;
   if (!user && !loading && !error) {
     if (localStorage.getItem("token")) {
@@ -29,7 +29,6 @@ const PrivateRoute = ({ component, props }: PropType) => {
       </>
     );
   } else if (!user) {
-    console.log("rendering login");
     return <Navigate to="/login" />;
   } else {
     return <Component {...props} />;

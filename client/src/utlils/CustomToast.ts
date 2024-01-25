@@ -5,7 +5,7 @@ export const SuccessToast = (msg: any) => {
     position: "top-center",
     autoClose: 2000,
     hideProgressBar: false,
-    // icon: '🚀', ? will figure out how to add
+    icon: () => "🚀",
   });
 };
 
@@ -14,5 +14,6 @@ export const ErrorToast = (msg: any) => {
     position: "top-center",
     autoClose: 2000,
     hideProgressBar: false,
+    icon: () => "🚨",
   });
 };

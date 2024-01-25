@@ -24,7 +24,6 @@ function App() {
       getUser();
     }
   }, []);
-
   return (
     <>
       <ToastContainer />

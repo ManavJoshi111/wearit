@@ -1,16 +1,14 @@
-import { NavLink } from "react-router-dom";
+import CustomNavbar from "../components/CustomNavbar";
 
-const Home: React.FC = () => {
+type Prop = {
+  prop?: string;
+};
+
+const Home: React.FC<Prop> = ({ prop }) => {
   return (
     <>
-      <h1>WearIt!</h1>
-      <NavLink to="/login">Login</NavLink>
-      <br />
-      <NavLink to="/">Home</NavLink>
-      <br />
-      <NavLink to="/register">Register</NavLink>
-      <br />
-      <NavLink to="/logout">Logout</NavLink>
+      <h1>{prop}</h1>
+      {/* <CustomNavbar /> */}
     </>
   );
 };
