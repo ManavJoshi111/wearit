@@ -8,7 +8,6 @@ import {
 export const addProduct = async (ctx) => {
   try {
     const { name, categories, price, imgUrls } = ctx.request.body;
-    console.log(name, categories, price, imgUrls);
     await insertProduct({ name, categories, price, imgUrls });
     ctx.response.status = 200;
     ctx.response.body = { message: "Product added successfully!" };

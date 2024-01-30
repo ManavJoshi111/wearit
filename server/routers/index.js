@@ -1,11 +1,31 @@
-import { authRouter } from "./auth.router.js";
-import { productRouter } from "./product.router.js";
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const routes = [authRouter, productRouter];
+const currentFile = fileURLToPath(import.meta.url);
+const currentDir = path.dirname(currentFile);
 
-export default (app) => {
+let routes = [];
+
+const getImports = async () => {
+  try {
+    const files = await fs.readdir(currentDir);
+    for (const file of files) {
+      if (file !== "index.js" && file.endsWith(".js") && file !== "test.js") {
+        const data = await import(`./${file}`);
+        routes.push(data);
+      }
+    }
+  } catch (error) {
+    console.error("Error reading files:", error);
+  }
+};
+
+export default async (app) => {
+  await getImports();
   routes.forEach((route) => {
-    app.use(route.routes());
-    app.use(route.allowedMethods());
+    Object.values(route).forEach((value) => {
+      app.use(value.routes()).use(value.allowedMethods());
+    });
   });
 };

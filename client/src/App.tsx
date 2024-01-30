@@ -16,6 +16,7 @@ import WithoutNavbar from "./containers/WithoutNavbar";
 import WithNavbar from "./containers/WithNavbar";
 import { USER_TYPES } from "./utlils/constants";
 import getUserToken from "./utlils/getUserToken";
+import AddProduct from "./Features/Product/components/AddProduct";
 
 function App() {
   const { BUYER, SELLER } = USER_TYPES;
@@ -42,6 +43,7 @@ function App() {
 
   if (!user && !loading && !error) {
     if (localStorage.getItem("token")) {
+      console.log("returning loading");
       return <h1>Loading...</h1>;
     }
   }
@@ -167,6 +169,10 @@ function App() {
                 props={{ prop: "seller route" }}
               />
             }
+          />
+          <Route
+            path="/s/add-product"
+            element={<PrivateRoute type={SELLER} component={AddProduct} />}
           />
           <Route
             path="/s/products"

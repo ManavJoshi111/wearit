@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { post } from "../../../utlils/axios";
+import getUserToken from "../../../utlils/getUserToken";
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
@@ -29,9 +30,8 @@ export const getUserData = createAsyncThunk(
   "user/getUserData",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await post("/api/auth/get-user", {
-        token: localStorage.getItem("token"),
-      });
+      console.log(await getUserToken());
+      const res = await post("/api/auth/get-user");
       return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data);

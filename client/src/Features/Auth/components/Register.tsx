@@ -42,7 +42,6 @@ const Register = () => {
       SuccessToast(data);
       localStorage.setItem("token", data.token);
       await dispatch(getUserData());
-      navigate("/");
     } catch (err: any) {
       console.log("err: ", err);
       ErrorToast(err);
@@ -52,9 +51,13 @@ const Register = () => {
   useEffect(() => {
     if (user) {
       ErrorToast("You are already logged in");
-      navigate("/");
+      if (user.type === "buyer") {
+        navigate("/");
+        return;
+      }
+      navigate("/s");
     }
-  }, []);
+  }, [user]);
 
   if (user) {
     return (

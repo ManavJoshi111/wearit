@@ -8,6 +8,7 @@ import {
   SuccessToast,
 } from "../../../customComponents/CustomToast";
 import { NavLink, useNavigate } from "react-router-dom";
+import setUserToken from "../../../utlils/setUserToken";
 
 type FormData = {
   email?: string;
@@ -15,7 +16,7 @@ type FormData = {
 };
 
 const Login = () => {
-  const { user } = useSelector((state: any) => state.user);
+  let { user } = useSelector((state: any) => state.user);
   const [formData, setFormData] = useState<FormData>({});
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -34,9 +35,8 @@ const Login = () => {
     try {
       const data = await dispatch(loginUser(formData)).unwrap();
       SuccessToast(data);
-      localStorage.setItem("token", data.token);
+      await setUserToken(data.token);
       await dispatch(getUserData());
-      navigate("/");
     } catch (err: any) {
       console.log("err: ", err);
       ErrorToast(err);
@@ -46,9 +46,13 @@ const Login = () => {
   useEffect(() => {
     if (user) {
       ErrorToast("You are already logged in");
-      navigate("/");
+      if (user.type === "buyer") {
+        navigate("/");
+        return;
+      }
+      navigate("/s");
     }
-  });
+  }, [user]);
 
   if (user) {
     return (

@@ -1,12 +1,17 @@
 import axios from "axios";
 import { SERVER_URL } from "./constants";
+import getUserToken from "./getUserToken";
 
 const instance = axios.create({
   baseURL: SERVER_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Bearer " + localStorage.getItem("token"),
   },
+});
+
+instance.interceptors.request.use(async (config) => {
+  config.headers.Authorization = "Bearer " + (await getUserToken());
+  return config;
 });
 
 export const get = async (url: string, params: Object = {}): Promise<any> => {

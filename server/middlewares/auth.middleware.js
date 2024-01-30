@@ -3,7 +3,7 @@ import { getUserById } from "../mongodb/user.js";
 
 const authenticateUser = async (ctx, next) => {
   try {
-    console.log("Headers: ", ctx.headers.authorization);
+    console.log("header: ", ctx.headers.authorization);
     if (!ctx.headers.authorization) {
       ctx.response.status = 401;
       ctx.response.body = {

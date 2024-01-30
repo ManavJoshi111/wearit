@@ -9,9 +9,10 @@ export const proudctNameValidator = ({ name }) => {
 };
 
 export const categoriesValidator = ({ categories }) => {
-  const schema = Joi.array().items(Joi.string()).required().messages({
+  const schema = Joi.array().min(1).items(Joi.string()).required().messages({
     "string.empty": `Categories are required`,
     "any.required": `Categories are required`,
+    "array.min": "Categories are required",
   });
   return schema.validate(categories).error?.details[0].message;
 };
@@ -26,8 +27,8 @@ export const priceValidator = ({ price }) => {
 
 export const imgUrlsValidator = ({ imgUrls }) => {
   const schema = Joi.array().items(Joi.string()).required().messages({
-    "string.empty": `Image Urls are required`,
-    "any.required": `Image Urls are required`,
+    "string.empty": `Please upload at least 1 product image`,
+    "any.required": `Please upload at least 1 product image`,
   });
   return schema.validate(imgUrls).error?.details[0].message;
 };

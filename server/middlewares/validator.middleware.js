@@ -1,19 +1,13 @@
 const validate = (validators) => {
   return async (ctx, next) => {
-    const errors = [];
     for (const validator of validators) {
       const error = await validator(ctx.request.body);
       if (error) {
-        errors.push(error);
+        console.log("error in validate", error);
+        ctx.response.status = 400;
+        ctx.response.body = { error };
+        return;
       }
-    }
-    if (errors.length > 0) {
-      console.log("Error in validate: ", errors);
-      ctx.status = 400;
-      ctx.body = {
-        errors,
-      };
-      return;
     }
     await next();
   };
