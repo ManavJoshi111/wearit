@@ -15,10 +15,10 @@ import { useSelector } from "react-redux";
 import WithoutNavbar from "./containers/WithoutNavbar";
 import WithNavbar from "./containers/WithNavbar";
 import { USER_TYPES } from "./utlils/constants";
+import getUserToken from "./utlils/getUserToken";
 
 function App() {
   const { BUYER, SELLER } = USER_TYPES;
-  const token = localStorage.getItem("token");
   const dispatch = useDispatch<AppDispatch>();
   const { user, loading, error } = useSelector((state: any) => state.user);
   const getUser = async () => {
@@ -31,9 +31,13 @@ function App() {
   };
 
   useEffect(() => {
-    if (token) {
-      getUser();
-    }
+    const getToken = async () => {
+      const token = await getUserToken();
+      if (token) {
+        getUser();
+      }
+    };
+    getToken();
   }, []);
 
   if (!user && !loading && !error) {

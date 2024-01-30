@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import CustomNavbar from "../customComponents/CustomNavbar";
+import CustomNavbar from "../customComponents/CustomNavbar.js";
 const WithNavbar = () => {
   return (
     <>

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { USER_TYPES } from "../utlils/constants";
 
 type PropType = {
   type?: string;
@@ -8,6 +9,7 @@ type PropType = {
 };
 
 const PrivateRoute = ({ component, type, props }: PropType) => {
+  const { BUYER, SELLER } = USER_TYPES;
   const Component = component;
   const { user, loading, error } = useSelector((state: any) => state.user);
 
@@ -26,14 +28,14 @@ const PrivateRoute = ({ component, type, props }: PropType) => {
   }
   if (user) {
     switch (type) {
-      case "buyer": {
+      case BUYER: {
         return user.type === "buyer" ? (
           <Component {...props} />
         ) : (
           <Navigate to="/login" />
         );
       }
-      case "seller": {
+      case SELLER: {
         return user.type === "seller" ? (
           <Component {...props} />
         ) : (

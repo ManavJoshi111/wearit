@@ -1,22 +1,24 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "./constants.js";
 
-exports.generateJWT = async (_id) => {
+export const generateJWT = async (jwtData) => {
   try {
-    const JWT = await jwt.sign(_id, process.env.JWT_SECRET, {
+    const JWT = await jwt.sign(jwtData, JWT_SECRET, {
       expiresIn: "7d",
     });
-    console.log("generated jwt: ", JWT);
     return JWT;
   } catch (err) {
     throw err;
   }
 };
 
-exports.verifyJWT = async (token) => {
+export const verifyJWT = async (token) => {
   try {
-    const payload = await jwt.verify(token, process.env.JWT_SECRET);
+    const payload = await jwt.verify(token, JWT_SECRET);
     return payload;
   } catch (err) {
     throw err;
   }
 };
+
+export const JsonWebTokenError = jwt.JsonWebTokenError;

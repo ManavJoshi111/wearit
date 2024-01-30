@@ -1,5 +1,11 @@
-const authRouter = require("./auth.router");
+import { authRouter } from "./auth.router.js";
+import { productRouter } from "./product.router.js";
 
-module.exports = {
-  authRouter,
+const routes = [authRouter, productRouter];
+
+export default (app) => {
+  routes.forEach((route) => {
+    app.use(route.routes());
+    app.use(route.allowedMethods());
+  });
 };

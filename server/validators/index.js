@@ -1,3 +1,27 @@
-const authValidator = require("./auth.validator");
+import {
+  firstNameValidator,
+  lastNameValidator,
+  emailValidator,
+  passwordValidator,
+  confirmPasswordValidator,
+  typeValidator,
+} from "./auth.validator.js";
+import {
+  proudctNameValidator,
+  priceValidator,
+  categoriesValidator,
+  imgUrlsValidator,
+} from "./product.validator.js";
 
-module.exports = { authValidator };
+export {
+  firstNameValidator,
+  lastNameValidator,
+  emailValidator,
+  passwordValidator,
+  confirmPasswordValidator,
+  typeValidator,
+  proudctNameValidator,
+  priceValidator,
+  categoriesValidator,
+  imgUrlsValidator,
+};

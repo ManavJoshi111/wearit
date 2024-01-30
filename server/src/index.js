@@ -1,15 +1,15 @@
-const Koa = require("koa");
-const cors = require("@koa/cors");
-const { koaBody } = require("koa-body");
-const { connectToDB } = require("../DB/db");
+import Koa from "koa";
+import cors from "@koa/cors";
+import { koaBody } from "koa-body";
+import { PORT } from "../utils/constants.js";
+import { connectToDB } from "../DB/db.js";
+import routes from "../routers/index.js";
 
 connectToDB();
-const PORT = process.env.PORT;
 const app = new Koa();
-app.use(koaBody());
+app.use(koaBody({}));
 app.use(cors());
-const { authRouter } = require("../routers");
-app.use(authRouter.routes()).use(authRouter.allowedMethods());
+routes(app);
 
 app.listen(PORT, () => {
   console.log(`The server is listening on ${PORT}`);

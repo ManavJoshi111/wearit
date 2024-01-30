@@ -22,20 +22,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
-      console.log(
-        "state in logout reducer: ",
-        state.user,
-        state.loading,
-        state.error
-      );
       localStorage.removeItem("token");
       state.user = state.loading = state.error = undefined;
-      console.log(
-        "state in logout reducer 2: ",
-        state.user,
-        state.loading,
-        state.error
-      );
     },
   },
   extraReducers: (builder) => {

@@ -1,14 +1,13 @@
-const { MongoClient } = require("mongodb");
-const uri = process.env.MONGODB_LOCAL_URI;
-const client = new MongoClient(uri);
+import { MongoClient } from "mongodb";
+import { MONGODB_LOCAL_URI } from "../utils/constants.js";
+const uri = MONGODB_LOCAL_URI;
+export const client = new MongoClient(uri);
 
-async function connectToDB() {
+export const connectToDB = async () => {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }
-}
-
-module.exports = { client, connectToDB };
+};

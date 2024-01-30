@@ -12,7 +12,6 @@ const Logout = () => {
         dispatch(logoutUser());
         navigate("/login");
       } else {
-        console.log("no token found");
         navigate("/login");
       }
     } catch (err) {

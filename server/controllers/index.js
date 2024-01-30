@@ -1,3 +1,4 @@
-const authController = require("./auth.controller");
+import { register, login, getUser } from "./auth.controller.js";
+import { addProduct } from "./product.controller.js";
 
-module.exports = { authController };
+export { register, login, getUser, addProduct };
