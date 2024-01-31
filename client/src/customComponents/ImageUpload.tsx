@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESEET } from "./constants";
+import {
+  CLOUDINARY_NAME,
+  CLOUDINARY_UPLOAD_PRESEET,
+} from "../utlils/constants";
 
 declare global {
   interface Window {
@@ -38,10 +41,7 @@ const ImageUpload: React.FC<PropType> = ({ setFormData }) => {
   return (
     <>
       <button
-        // onClick={(e: React.FormEvent) => {
-        //   e.preventDefault();
-        //   return widgetRef.current.openWidget();
-        // }}
+        className="btn btn-secondary"
         onClick={(e) => {
           e.preventDefault();
           return widgetRef.current.open();

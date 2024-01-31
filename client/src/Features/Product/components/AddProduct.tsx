@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InputTags } from "react-bootstrap-tagsinput";
 import "react-bootstrap-tagsinput/dist/index.css";
 import { Container, Form, Button } from "react-bootstrap";
-import ImageUpload from "../../../utlils/ImageUpload";
+import ImageUpload from "../../../customComponents/ImageUpload";
 import { post } from "../../../utlils/axios";
 import { useNavigate } from "react-router-dom";
 import {
@@ -38,7 +38,7 @@ const AddProduct = () => {
       console.log("Submitting the form: ", formData);
       const { data } = await post("/api/product/add-product", formData);
       console.log("Data: ", data);
-      SuccessToast(data.message);
+      SuccessToast(data);
       navigate("/s");
     } catch (err: any) {
       console.log("err", err.response.data.error);
@@ -51,7 +51,7 @@ const AddProduct = () => {
       <Container
         className="mt-5 p-4 border border-2 w-50 shadow"
         fluid
-        style={{ overflowY: "auto", maxHeight: "400px" }}
+        style={{ overflowY: "auto", maxHeight: "600px" }}
       >
         <Form>
           <h2 className="fw-bold text-center mb-4">Add Product</h2>
@@ -86,13 +86,15 @@ const AddProduct = () => {
             />
           </Form.Group>
         </Form>
-        <div className="d-flex">
+        <div
+          className={`d-flex ${
+            formData?.imgUrls?.length === 0 ? " d-none" : ""
+          }`}
+        >
           {formData.imgUrls?.map((url) => (
             <img src={url} alt="product" style={{ width: "200px" }} />
           ))}
         </div>
-        <br />
-        <br />
         <ImageUpload setFormData={setFormData} />
         <br />
         <Button

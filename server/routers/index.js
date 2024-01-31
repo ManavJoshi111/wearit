@@ -11,7 +11,7 @@ const getImports = async () => {
   try {
     const files = await fs.readdir(currentDir);
     for (const file of files) {
-      if (file !== "index.js" && file.endsWith(".js") && file !== "test.js") {
+      if (file !== "index.js" && file.endsWith(".js")) {
         const data = await import(`./${file}`);
         routes.push(data);
       }

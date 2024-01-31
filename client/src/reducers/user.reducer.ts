@@ -5,11 +5,11 @@ import {
   registerUser,
 } from "../Features/Auth/actions/user.action";
 
-interface UserState {
+type UserState = {
   user?: Object;
   error?: String;
   loading?: Boolean;
-}
+};
 
 const initialState: UserState = {
   user: undefined,
