@@ -4,6 +4,7 @@ import {
   loginUser,
   registerUser,
 } from "../Features/Auth/actions/user.action";
+import removeUserToken from "../utlils/removeUserToken";
 
 type UserState = {
   user?: Object;
@@ -22,7 +23,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logoutUser: (state) => {
-      localStorage.removeItem("token");
+      removeUserToken();
       state.user = state.loading = state.error = undefined;
     },
   },

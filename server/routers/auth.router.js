@@ -27,7 +27,7 @@ router.post(
   ]),
   register
 );
-router.post("/login", login);
+router.post("/login", validate([emailValidator, passwordValidator]), login);
 
 router.post("/get-user", authenticateUser, getUser);
 

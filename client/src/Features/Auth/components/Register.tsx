@@ -8,6 +8,7 @@ import {
   SuccessToast,
   ErrorToast,
 } from "../../../customComponents/CustomToast";
+import setUserToken from "../../../utlils/setUserToken";
 
 type FormData = {
   firstName?: string;
@@ -40,7 +41,7 @@ const Register = () => {
       const data = await dispatch(registerUser(formData)).unwrap();
       console.log("data: ", data);
       SuccessToast(data);
-      localStorage.setItem("token", data.token);
+      setUserToken(data?.token);
       await dispatch(getUserData());
     } catch (err: any) {
       console.log("err: ", err);

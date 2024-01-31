@@ -9,8 +9,8 @@ const instance = axios.create({
   },
 });
 
-instance.interceptors.request.use(async (config) => {
-  config.headers.Authorization = "Bearer " + (await getUserToken());
+instance.interceptors.request.use((config) => {
+  config.headers.Authorization = "Bearer " + getUserToken();
   return config;
 });
 

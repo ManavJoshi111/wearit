@@ -35,7 +35,7 @@ const Login = () => {
     try {
       const data = await dispatch(loginUser(formData)).unwrap();
       SuccessToast(data);
-      await setUserToken(data.token);
+      setUserToken(data.token);
       await dispatch(getUserData());
     } catch (err: any) {
       console.log("err: ", err);
