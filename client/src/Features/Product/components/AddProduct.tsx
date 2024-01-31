@@ -39,7 +39,7 @@ const AddProduct = () => {
       const { data } = await post("/api/product/add-product", formData);
       console.log("Data: ", data);
       SuccessToast(data);
-      navigate("/s");
+      navigate("/s/products");
     } catch (err: any) {
       console.log("err", err.response.data.error);
       ErrorToast(err.response.data);
@@ -70,6 +70,15 @@ const AddProduct = () => {
               type="number"
               name="price"
               placeholder="Enter price"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPrice">
+            <Form.Label className="fw-bold">Quantity:</Form.Label>
+            <Form.Control
+              type="number"
+              name="quantity"
+              placeholder="Enter quantity"
               onChange={handleInputChange}
             />
           </Form.Group>

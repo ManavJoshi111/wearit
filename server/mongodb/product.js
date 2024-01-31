@@ -10,7 +10,7 @@ export const insertProduct = async (data) => {
 
 // read
 export const getAllProducts = async () => {
-  return await Product.find({});
+  return await Product.find({}).toArray();
 };
 
 export const getProductById = async (id) => {

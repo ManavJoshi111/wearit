@@ -17,6 +17,15 @@ export const categoriesValidator = ({ categories }) => {
   return schema.validate(categories).error?.details[0].message;
 };
 
+export const quantityValidator = ({ quantity }) => {
+  const schema = Joi.number().positive().required().messages({
+    "number.empty": `Quantity is required`,
+    "number.positive": `Quantity must be a positive number`,
+    "any.required": `Quantity is required`,
+  });
+  return schema.validate(quantity).error?.details[0].message;
+};
+
 export const priceValidator = ({ price }) => {
   const schema = Joi.number().positive().required().messages({
     "number.empty": `Price is required`,

@@ -14,10 +14,10 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-export const get = async (url: string, params: Object = {}): Promise<any> => {
+export const get = async (url: string, params: object = {}): Promise<any> => {
   return await instance.get(url, { params });
 };
 
-export const post = async (url: string, data: Object = {}): Promise<any> => {
+export const post = async (url: string, data: object = {}): Promise<any> => {
   return await instance.post(url, data);
 };

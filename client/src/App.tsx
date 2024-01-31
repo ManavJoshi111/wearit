@@ -7,15 +7,15 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import getUserToken from "./utlils/getUserToken";
 import Router from "./Routes/Router";
+import { RootState } from "./store";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: any) => state.user);
+  const { user } = useSelector((state: RootState) => state.user);
   const getUser = async () => {
     try {
-      const data = await dispatch(getUserData());
-      data;
-    } catch (err: any) {
+      await dispatch(getUserData());
+    } catch (err: unknown) {
       console.log("err: ", err);
     }
   };

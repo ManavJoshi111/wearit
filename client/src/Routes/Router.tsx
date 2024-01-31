@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import WithoutNavbar from "../containers/WithoutNavbar";
 import WithNavbar from "../containers/WithNavbar";
 import AddProduct from "../Features/Product/components/AddProduct";
+import Products from "../Features/Product/components/Products";
 import { USER_TYPES } from "../utlils/constants";
 
 const Router = () => {
@@ -143,7 +144,7 @@ const Router = () => {
           element={
             <PrivateRoute
               type={SELLER}
-              component={SellerDashboard}
+              component={Products}
               props={{ prop: "seller route" }}
             />
           }

@@ -5,11 +5,12 @@ import {
   registerUser,
 } from "../Features/Auth/actions/user.action";
 import removeUserToken from "../utlils/removeUserToken";
+import UserType from "../types/user.types";
 
 type UserState = {
-  user?: Object;
-  error?: String;
-  loading?: Boolean;
+  user?: UserType;
+  error?: string;
+  loading?: boolean;
 };
 
 const initialState: UserState = {

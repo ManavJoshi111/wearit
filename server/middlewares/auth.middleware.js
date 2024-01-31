@@ -1,9 +1,8 @@
 import { verifyJWT, JsonWebTokenError } from "../utils/JWTUtil.js";
 import { getUserById } from "../mongodb/user.js";
 
-const authenticateUser = async (ctx, next) => {
+export const authenticateUser = async (ctx, next) => {
   try {
-    console.log("header: ", ctx.headers.authorization);
     if (!ctx.headers.authorization) {
       ctx.response.status = 401;
       ctx.response.body = {
@@ -40,4 +39,42 @@ const authenticateUser = async (ctx, next) => {
   }
 };
 
-export default authenticateUser;
+export const isSeller = async (ctx, next) => {
+  try {
+    if (ctx.user.type !== "seller") {
+      ctx.response.status = 403;
+      ctx.response.body = {
+        error: "Forbidden",
+      };
+      return;
+    }
+    await next();
+  } catch (err) {
+    console.log("error in isSeller middleware: ", err);
+    ctx.response.status = 500;
+    ctx.response.body = {
+      error: "Internal server error, please try again after sometime!",
+    };
+    return;
+  }
+};
+
+export const isBuyer = async (ctx, next) => {
+  try {
+    if (ctx.user.type !== "buyer") {
+      ctx.response.status = 403;
+      ctx.response.body = {
+        error: "Forbidden",
+      };
+      return;
+    }
+    await next();
+  } catch (err) {
+    console.log("error in isBuyer middleware: ", err);
+    ctx.response.status = 500;
+    ctx.response.body = {
+      error: "Internal server error, please try again after sometime!",
+    };
+    return;
+  }
+};

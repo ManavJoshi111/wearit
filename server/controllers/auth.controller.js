@@ -6,6 +6,7 @@ import {
   insertUser,
   getUserByEmail,
   getUserByEmailPassword,
+  getUserById,
 } from "../mongodb/user.js";
 
 export const register = async (ctx) => {
@@ -76,6 +77,7 @@ export const login = async (ctx) => {
 };
 
 export const getUser = async (ctx) => {
+  ctx.user = await getUserById(ctx.user._id);
   ctx.response.status = 200;
   ctx.response.body = {
     user: ctx.user,

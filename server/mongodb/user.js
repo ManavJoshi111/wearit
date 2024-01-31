@@ -9,15 +9,7 @@ export const insertUser = async (data) => {
 };
 
 export const getUserById = async (id) => {
-  return await User.findOne(
-    { _id: new ObjectId(id) },
-    {
-      projection: {
-        _id: 0,
-        password: 0,
-      },
-    }
-  );
+  return await User.findOne({ _id: new ObjectId(id) });
 };
 
 export const getUserByEmail = async (email) => {

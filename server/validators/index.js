@@ -9,6 +9,7 @@ import {
 import {
   proudctNameValidator,
   priceValidator,
+  quantityValidator,
   categoriesValidator,
   imgUrlsValidator,
 } from "./product.validator.js";
@@ -22,6 +23,7 @@ export {
   typeValidator,
   proudctNameValidator,
   priceValidator,
+  quantityValidator,
   categoriesValidator,
   imgUrlsValidator,
 };

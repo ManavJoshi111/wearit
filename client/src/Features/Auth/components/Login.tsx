@@ -16,7 +16,7 @@ type FormData = {
 };
 
 const Login = () => {
-  let { user } = useSelector((state: any) => state.user);
+  const { user } = useSelector((state: any) => state.user);
   const [formData, setFormData] = useState<FormData>({});
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();

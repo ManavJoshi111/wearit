@@ -1,8 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import {
-  CLOUDINARY_NAME,
-  CLOUDINARY_UPLOAD_PRESEET,
-} from "../utlils/constants";
+import { CLOUDINARY_NAME, CLOUDINARY_UPLOAD_PRESET } from "../utlils/constants";
 
 declare global {
   interface Window {
@@ -22,11 +19,10 @@ const ImageUpload: React.FC<PropType> = ({ setFormData }) => {
     widgetRef.current = cloudinaryRef?.current?.createUploadWidget(
       {
         cloudName: CLOUDINARY_NAME,
-        uploadPreset: CLOUDINARY_UPLOAD_PRESEET,
+        uploadPreset: CLOUDINARY_UPLOAD_PRESET,
       },
       (_: any, res: any) => {
         if (res.event === "success") {
-          console.log(res.info.secure_url);
           setFormData((prevState: any) => ({
             ...prevState,
             imgUrls:
