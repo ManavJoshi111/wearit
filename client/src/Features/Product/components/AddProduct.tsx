@@ -48,11 +48,7 @@ const AddProduct = () => {
 
   return (
     <>
-      <Container
-        className="mt-5 p-4 border border-2 w-50 shadow"
-        fluid
-        style={{ overflowY: "auto", maxHeight: "600px" }}
-      >
+      <Container className="mt-5 p-4 border border-2 w-50 shadow" fluid>
         <Form>
           <h2 className="fw-bold text-center mb-4">Add Product</h2>
           <Form.Group className="mb-3" controlId="formBasicName">
@@ -70,6 +66,15 @@ const AddProduct = () => {
               type="number"
               name="price"
               placeholder="Enter price"
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicDescription">
+            <Form.Label className="fw-bold">Description:</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="description"
+              placeholder="Enter description"
               onChange={handleInputChange}
             />
           </Form.Group>

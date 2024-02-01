@@ -20,7 +20,15 @@ export const authenticateUser = async (ctx, next) => {
     }
     const decodedToken = await verifyJWT(token);
     const user = await getUserById(decodedToken._id);
-    ctx.user = user;
+    if (user) {
+      ctx.user = user;
+    } else {
+      ctx.response.status = 401;
+      ctx.response.body = {
+        error: "Unauthorized!",
+      };
+      return;
+    }
     await next();
   } catch (err) {
     if (err instanceof JsonWebTokenError) {

@@ -23,13 +23,18 @@ export const register = async (ctx) => {
       return;
     }
     const hashedPassword = md5(password);
-    const result = await insertUser({
+    const user = {
       firstName,
       lastName,
       email,
       password: hashedPassword,
       type,
-    });
+    };
+    if (type === "seller") {
+      user.companyName = ctx.request.body.companyName;
+      user.companyAddress = ctx.request.body.companyAddress;
+    }
+    const result = await insertUser(user);
     const jwt = await generateJWT({ _id: result.insertedId });
     session.commitTransaction();
     ctx.response.status = 200;

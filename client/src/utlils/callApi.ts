@@ -1,4 +1,4 @@
-import { get, post } from "./axios";
+import { get, post, put, del } from "./axios";
 
 const callApi = (route: string, method: string, data?: any) => {
   switch (method) {
@@ -7,6 +7,12 @@ const callApi = (route: string, method: string, data?: any) => {
     }
     case "POST": {
       return post(route, data);
+    }
+    case "PUT": {
+      return put(route, data);
+    }
+    case "DELETE": {
+      return del(route);
     }
   }
 };

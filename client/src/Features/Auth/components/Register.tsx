@@ -130,6 +130,29 @@ const Register = () => {
             <option value="seller">Seller</option>
           </Form.Control>
         </Form.Group>
+        {formData && formData.type === "seller" ? (
+          <>
+            <Form.Group className="mb-3" controlId="formCompanyName">
+              <Form.Label className="fw-bold">Company Name:</Form.Label>
+              <Form.Control
+                type="text"
+                name="companyName"
+                placeholder="Enter company name"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formCompanyAddress">
+              <Form.Label className="fw-bold">Company Address:</Form.Label>
+              <Form.Control
+                type="text"
+                name="companyAddress"
+                placeholder="Enter company address"
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+          </>
+        ) : null}
         <Form.Text className="text-muted">
           Already have an account? &nbsp;
           <NavLink to="/login" className="text-decoration-none">

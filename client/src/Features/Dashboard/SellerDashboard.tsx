@@ -1,12 +1,31 @@
-type Prop = {
-  prop?: string;
-};
+import CustomNavbar from "../../customComponents/CustomNavbar";
 
-const SellerDashboard: React.FC<Prop> = ({ prop }) => {
+const SellerDashboard: React.FC = () => {
+  const NavbarLinks = [
+    {
+      name: "Home",
+      path: "/s",
+    },
+    {
+      name: "Add Product",
+      path: "/s/add-product",
+    },
+    {
+      name: "Products",
+      path: "/s/products",
+    },
+    {
+      name: "Orders",
+      path: "/s/orders",
+    },
+    {
+      name: "Logout",
+      path: "/logout",
+    },
+  ];
   return (
     <>
-      <h1>{prop}</h1>
-      {/* <CustomNavbar /> */}
+      <CustomNavbar links={NavbarLinks} />
     </>
   );
 };

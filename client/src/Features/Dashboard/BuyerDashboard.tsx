@@ -1,15 +1,39 @@
-import { NavLink } from "react-router-dom";
+import CustomNavbar from "../../customComponents/CustomNavbar";
 
-type Prop = {
-  prop?: string;
-};
-
-const BuyerDashboard: React.FC<Prop> = ({ prop }) => {
+const BuyerDashboard: React.FC = () => {
+  const NavbarLinks = [
+    {
+      name: "Home",
+      path: "/",
+    },
+    {
+      name: "Products",
+      path: "/products",
+    },
+    {
+      name: "Cart",
+      path: "/cart",
+    },
+    {
+      name: "Checkout",
+      path: "/checkout",
+    },
+    {
+      name: "Reviews",
+      path: "/reviews",
+    },
+    {
+      name: "Orders",
+      path: "/orders",
+    },
+    {
+      name: "Logout",
+      path: "/logout",
+    },
+  ];
   return (
     <>
-      <h1>{prop}</h1>
-      <NavLink to="/logout">Logout</NavLink>
-      {/* <CustomNavbar /> */}
+      <CustomNavbar links={NavbarLinks} />
     </>
   );
 };

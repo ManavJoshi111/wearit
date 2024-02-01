@@ -7,6 +7,8 @@ import {
   passwordValidator,
   confirmPasswordValidator,
   typeValidator,
+  companyNameValidator,
+  companyAddressValidator,
 } from "../validators/auth.validator.js";
 import validate from "../middlewares/validator.middleware.js";
 import { authenticateUser } from "../middlewares/index.js";
@@ -24,6 +26,8 @@ router.post(
     passwordValidator,
     confirmPasswordValidator,
     typeValidator,
+    companyNameValidator,
+    companyAddressValidator,
   ]),
   register
 );

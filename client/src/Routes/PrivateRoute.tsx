@@ -1,16 +1,19 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { USER_TYPES } from "../utlils/constants";
+import { Outlet } from "react-router-dom";
+import BuyerDashboard from "../Features/Dashboard/BuyerDashboard";
+import SellerDashboard from "../Features/Dashboard/SellerDashboard";
 
 type PropType = {
   type?: string;
-  component: React.FC;
-  props?: any;
+  // component: React.FC<any>;
+  // props?: any;
 };
 
-const PrivateRoute = ({ component, type, props }: PropType) => {
+const PrivateRoute = ({ type }: PropType) => {
   const { BUYER, SELLER } = USER_TYPES;
-  const Component = component;
+  // const Component = component;
   const { user, loading, error } = useSelector((state: any) => state.user);
 
   if (loading) {
@@ -30,23 +33,23 @@ const PrivateRoute = ({ component, type, props }: PropType) => {
     switch (type) {
       case BUYER: {
         return user.type === "buyer" ? (
-          <Component {...props} />
+          <>
+            <BuyerDashboard />
+            <Outlet />
+          </>
         ) : (
-          <Navigate to="/login" />
+          <Navigate to="/s" />
         );
       }
       case SELLER: {
         return user.type === "seller" ? (
-          <Component {...props} />
+          <>
+            <SellerDashboard />
+            <Outlet />
+          </>
         ) : (
-          <Navigate to="/login" />
+          <Navigate to="/" />
         );
-      }
-      case "common-protected": {
-        return <Component {...props} />;
-      }
-      default: {
-        return <Navigate to="/" />;
       }
     }
   } else {

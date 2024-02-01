@@ -10,7 +10,6 @@ export const SuccessToast = (msg: any) => {
 };
 
 export const ErrorToast = (msg: any) => {
-  console.log("Msg in error: ", msg);
   toast.error(msg.error, {
     position: "top-center",
     autoClose: 500,

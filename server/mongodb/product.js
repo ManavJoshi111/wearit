@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { client } from "../DB/db.js";
 const Product = client.db("wearit").collection("products");
 
@@ -14,13 +15,13 @@ export const getAllProducts = async () => {
 };
 
 export const getProductById = async (id) => {
-  return await Product.findOne({ _id: id });
+  return await Product.findOne({ _id: new ObjectId(id) });
 };
 
 // update
-export const updateProduct = async (data) => {
-  return await Product.updateOne(
-    { _id: data._id },
+export const updateProductData = async (data) => {
+  return await Product.findOneAndUpdate(
+    { _id: new ObjectId(data.id) },
     {
       $set: {
         ...data,
@@ -30,6 +31,6 @@ export const updateProduct = async (data) => {
 };
 
 // delete
-export const deleteProduct = async (id) => {
-  return await Product.deleteOne({ _id: id });
+export const deleteProductData = async (id) => {
+  return await Product.deleteOne({ _id: new ObjectId(id) });
 };

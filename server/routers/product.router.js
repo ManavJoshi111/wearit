@@ -6,9 +6,16 @@ import {
   priceValidator,
   quantityValidator,
   categoriesValidator,
+  descriptionValidator,
   imgUrlsValidator,
 } from "../validators/index.js";
-import { addProduct, getProducts } from "../controllers/index.js";
+import {
+  addProduct,
+  getProducts,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+} from "../controllers/index.js";
 
 const router = new Router({
   prefix: "/api/product",
@@ -23,11 +30,29 @@ router.post(
     priceValidator,
     quantityValidator,
     categoriesValidator,
+    descriptionValidator,
     imgUrlsValidator,
   ]),
   addProduct
 );
 
+router.put(
+  "/update-product/:id",
+  authenticateUser,
+  isSeller,
+  validate([
+    proudctNameValidator,
+    priceValidator,
+    quantityValidator,
+    categoriesValidator,
+    descriptionValidator,
+  ]),
+  updateProduct
+);
+
+router.delete("/delete-product/:id", authenticateUser, isSeller, deleteProduct);
+
 router.get("/get-products", authenticateUser, getProducts);
+router.get("/get-product/:id", authenticateUser, getProduct);
 
 export { router as productRouter };

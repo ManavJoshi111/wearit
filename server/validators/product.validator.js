@@ -1,11 +1,28 @@
 import Joi from "joi";
-
+/*
+Name
+Price
+Description
+Brandname
+Price
+Quantity
+Categories
+ImgUrls
+*/
 export const proudctNameValidator = ({ name }) => {
   const schema = Joi.string().required().messages({
     "string.empty": `Name is required`,
     "any.required": `Name is required`,
   });
   return schema.validate(name).error?.details[0].message;
+};
+
+export const descriptionValidator = ({ description }) => {
+  const schema = Joi.string().required().messages({
+    "string.empty": `Description is required`,
+    "any.required": `Description is required`,
+  });
+  return schema.validate(description).error?.details[0].message;
 };
 
 export const categoriesValidator = ({ categories }) => {

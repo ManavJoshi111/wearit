@@ -57,3 +57,29 @@ export const typeValidator = ({ type }) => {
   const schema = Joi.string().valid("buyer", "seller").required();
   return schema.validate(type).error?.details[0].message;
 };
+
+export const companyNameValidator = ({ type, companyName }) => {
+  const schema =
+    type === "buyer"
+      ? Joi.string().allow("")
+      : Joi.string().min(2).required().messages({
+          "string.base": `Company name should be a type of 'text'`,
+          "string.empty": `Company name cannot be an empty field`,
+          "string.min": `Company name should have a minimum length of {#limit}`,
+          "any.required": `Company name is required`,
+        });
+  return schema.validate(companyName).error?.details[0].message;
+};
+
+export const companyAddressValidator = ({ type, companyAddress }) => {
+  const schema =
+    type === "buyer"
+      ? Joi.string().allow("")
+      : Joi.string().min(2).required().messages({
+          "string.base": `Company address should be a type of 'text'`,
+          "string.empty": `Company address cannot be an empty field`,
+          "string.min": `Company address should have a minimum length of {#limit}`,
+          "any.required": `Company address is required`,
+        });
+  return schema.validate(companyAddress).error?.details[0].message;
+};

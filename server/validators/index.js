@@ -5,6 +5,8 @@ import {
   passwordValidator,
   confirmPasswordValidator,
   typeValidator,
+  companyNameValidator,
+  companyAddressValidator,
 } from "./auth.validator.js";
 import {
   proudctNameValidator,
@@ -12,6 +14,7 @@ import {
   quantityValidator,
   categoriesValidator,
   imgUrlsValidator,
+  descriptionValidator,
 } from "./product.validator.js";
 
 export {
@@ -20,10 +23,13 @@ export {
   emailValidator,
   passwordValidator,
   confirmPasswordValidator,
+  companyNameValidator,
+  companyAddressValidator,
   typeValidator,
   proudctNameValidator,
   priceValidator,
   quantityValidator,
   categoriesValidator,
   imgUrlsValidator,
+  descriptionValidator,
 };
