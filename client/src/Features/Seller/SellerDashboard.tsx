@@ -11,7 +11,7 @@ const SellerDashboard: React.FC = () => {
       path: "/s/add-product",
     },
     {
-      name: "Products",
+      name: "Your Products",
       path: "/s/products",
     },
     {

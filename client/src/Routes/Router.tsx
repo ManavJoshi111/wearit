@@ -2,16 +2,14 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Login from "../Features/Auth/components/Login";
 import Register from "../Features/Auth/components/Register";
 import Logout from "../Features/Auth/components/Logout";
-import BuyerDashboard from "../Features/Dashboard/BuyerDashboard";
-import SellerDashboard from "../Features/Dashboard/SellerDashboard";
+import BuyerDashboard from "../Features/Buyer/BuyerDashboard";
+import SellerDashboard from "../Features/Seller/SellerDashboard";
 import PrivateRoute from "./PrivateRoute";
-// import AddProduct from "../Features/Product/components/AddProduct";
-// import Products from "../Features/Product/components/Products";
 import { USER_TYPES } from "../utlils/constants";
-import AddProduct from "../Features/Product/components/AddProduct";
-import Products from "../Features/Product/components/Products";
-import Product from "../Features/Product/components/Product";
-// import Product from "../Features/Product/components/Product";
+import AddProduct from "../Features/Seller/AddProduct";
+import Products from "../Features/Seller/SellerProducts";
+import Product from "../Features/Common/Product";
+import BuyerProducts from "../Features/Buyer/BuyerProducts";
 
 const Router = () => {
   const { BUYER, SELLER } = USER_TYPES;
@@ -38,8 +36,8 @@ const Router = () => {
 
       {/* Buyer routes */}
       <Route path="/" element={<PrivateRoute type={BUYER} />}>
-        <Route path="products" element={<BuyerDashboard />} />
-        <Route path="product/:id" element={<BuyerDashboard />} />
+        <Route path="products" element={<BuyerProducts />} />
+        <Route path="product/:id" element={<Product />} />
         <Route path="cart" element={<BuyerDashboard />} />
         <Route path="checkout" element={<BuyerDashboard />} />
         <Route path="reviews" element={<BuyerDashboard />} />

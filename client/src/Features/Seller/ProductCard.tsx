@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge, Card } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 type ProductCardProps = {
@@ -8,6 +9,7 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { user } = useSelector((state: any) => state.user);
   return (
     <>
       <Card
@@ -15,7 +17,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         style={{ maxWidth: "20rem" }}
       >
         <NavLink
-          to={`/s/product/${product?._id}`}
+          to={
+            user.type === "seller"
+              ? `/s/product/${product?._id}`
+              : `/product/${product?._id}`
+          }
           className="text-decoration-none"
         >
           <Card.Header>

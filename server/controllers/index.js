@@ -2,6 +2,7 @@ import { register, login, getUser } from "./auth.controller.js";
 import {
   addProduct,
   getProducts,
+  getUserProducts,
   getProduct,
   updateProduct,
   deleteProduct,
@@ -13,6 +14,7 @@ export {
   getUser,
   addProduct,
   getProducts,
+  getUserProducts,
   getProduct,
   updateProduct,
   deleteProduct,

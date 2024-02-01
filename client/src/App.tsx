@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import getUserToken from "./utlils/getUserToken";
 import Router from "./Routes/Router";
 import { RootState } from "./store";
+import Loading from "./utlils/Loading";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +34,7 @@ function App() {
   if (!getUserToken() || user) {
     return <Router />;
   } else {
-    return <h1>App Loading...</h1>;
+    return <Loading />;
   }
 }
 

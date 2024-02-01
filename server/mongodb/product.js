@@ -14,6 +14,10 @@ export const getAllProducts = async () => {
   return await Product.find({}).toArray();
 };
 
+export const getUserProductsData = async (id) => {
+  return await Product.find({ userId: id }).toArray();
+};
+
 export const getProductById = async (id) => {
   return await Product.findOne({ _id: new ObjectId(id) });
 };

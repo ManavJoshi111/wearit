@@ -2,13 +2,10 @@ import { useState } from "react";
 import { InputTags } from "react-bootstrap-tagsinput";
 import "react-bootstrap-tagsinput/dist/index.css";
 import { Container, Form, Button } from "react-bootstrap";
-import ImageUpload from "../../../customComponents/ImageUpload";
-import { post } from "../../../utlils/axios";
+import ImageUpload from "../../customComponents/ImageUpload";
+import { post } from "../../utlils/axios";
 import { useNavigate } from "react-router-dom";
-import {
-  ErrorToast,
-  SuccessToast,
-} from "../../../customComponents/CustomToast";
+import { ErrorToast, SuccessToast } from "../../customComponents/CustomToast";
 
 type FormData = {
   name?: string;

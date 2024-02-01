@@ -12,6 +12,7 @@ import {
 import {
   addProduct,
   getProducts,
+  getUserProducts,
   getProduct,
   updateProduct,
   deleteProduct,
@@ -52,7 +53,8 @@ router.put(
 
 router.delete("/delete-product/:id", authenticateUser, isSeller, deleteProduct);
 
-router.get("/get-products", authenticateUser, getProducts);
+router.get("/get-all-products", authenticateUser, getProducts);
+router.get("/get-user-products", authenticateUser, isSeller, getUserProducts);
 router.get("/get-product/:id", authenticateUser, getProduct);
 
 export { router as productRouter };

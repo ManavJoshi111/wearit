@@ -2,8 +2,9 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { USER_TYPES } from "../utlils/constants";
 import { Outlet } from "react-router-dom";
-import BuyerDashboard from "../Features/Dashboard/BuyerDashboard";
-import SellerDashboard from "../Features/Dashboard/SellerDashboard";
+import BuyerDashboard from "../Features/Buyer/BuyerDashboard";
+import SellerDashboard from "../Features/Seller/SellerDashboard";
+import Loading from "../utlils/Loading";
 
 type PropType = {
   type?: string;
@@ -19,7 +20,7 @@ const PrivateRoute = ({ type }: PropType) => {
   if (loading) {
     return (
       <>
-        <h1>Loading...</h1>
+        <Loading />
       </>
     );
   } else if (error) {
