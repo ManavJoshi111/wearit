@@ -8,21 +8,28 @@ import {
 } from "../mongodb/product.js";
 
 export const addProduct = async (ctx) => {
+  console.log("addproduct");
   try {
     const { name, description, categories, price, imgUrls, quantity } =
       ctx.request.body;
-    await insertProduct({
+    const product = {
       name,
-      categories,
-      price,
-      imgUrls,
-      quantity,
       description,
+      price,
+      quantity,
+      imgUrls,
+      categories,
       userId: ctx.user._id,
       companyName: ctx.user.companyName,
-    });
+    };
+    const { acknowledged, insertedId } = await insertProduct(product);
+    if (acknowledged) {
+      product._id = insertedId;
+    }
+    console.log("addproduct");
+
     ctx.response.status = 200;
-    ctx.response.body = { message: "Product added successfully!" };
+    ctx.response.body = { message: "Product added successfully!", product };
     return;
   } catch (err) {
     console.log("Error in addProduct: ", err);
@@ -33,6 +40,7 @@ export const addProduct = async (ctx) => {
   }
 };
 
+// not used as of now, will se if we need it in future
 export const getUserProducts = async (ctx) => {
   try {
     const products = await getUserProductsData(ctx.user._id);
@@ -47,9 +55,14 @@ export const getUserProducts = async (ctx) => {
     };
   }
 };
+
+// returns all products if user is buyer and only added products if user is seller
 export const getProducts = async (ctx) => {
   try {
-    const products = await getAllProducts();
+    const products =
+      ctx.user.type === "seller"
+        ? await getUserProductsData(ctx.user._id)
+        : await getAllProducts();
     ctx.response.status = 200;
     ctx.response.body = { products };
     return;
@@ -86,6 +99,7 @@ export const updateProduct = async (ctx) => {
       id,
       ...ctx.request.body,
     });
+    console.log("data in update prodduct: ", updatedProduct);
     ctx.response.status = 200;
     ctx.response.body = {
       message: "Product updated successfully!",
@@ -112,6 +126,17 @@ export const deleteProduct = async (ctx) => {
     return;
   } catch (err) {
     console.log("Error in deleteProduct: ", err);
+    ctx.response.status = 500;
+    ctx.response.body = {
+      error: "Internal server error, please try again after sometime!",
+    };
+  }
+};
+
+export const addToCart = async (ctx) => {
+  try {
+  } catch (err) {
+    console.log("Error in addToCart: ", err);
     ctx.response.status = 500;
     ctx.response.body = {
       error: "Internal server error, please try again after sometime!",

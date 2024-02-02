@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import Login from "../Features/Auth/components/Login";
 import Register from "../Features/Auth/components/Register";
@@ -7,11 +8,10 @@ import SellerDashboard from "../Features/Seller/SellerDashboard";
 import PrivateRoute from "./PrivateRoute";
 import { USER_TYPES } from "../utlils/constants";
 import AddProduct from "../Features/Seller/AddProduct";
-import Products from "../Features/Seller/SellerProducts";
+import Products from "../Features/Common/Products";
 import Product from "../Features/Common/Product";
-import BuyerProducts from "../Features/Buyer/BuyerProducts";
 
-const Router = () => {
+const Router: React.FC = () => {
   const { BUYER, SELLER } = USER_TYPES;
   return (
     <Routes>
@@ -36,7 +36,7 @@ const Router = () => {
 
       {/* Buyer routes */}
       <Route path="/" element={<PrivateRoute type={BUYER} />}>
-        <Route path="products" element={<BuyerProducts />} />
+        <Route path="products" element={<Products />} />
         <Route path="product/:id" element={<Product />} />
         <Route path="cart" element={<BuyerDashboard />} />
         <Route path="checkout" element={<BuyerDashboard />} />

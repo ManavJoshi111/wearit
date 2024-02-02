@@ -1,7 +1,6 @@
 import { client } from "../DB/db.js";
 import md5 from "md5";
-import { generateJWT, verifyJWT } from "../utils/JWTUtil.js";
-// import { registerValidator, loginValidator } from "../validators/index.js";
+import { generateJWT } from "../utils/JWTUtil.js";
 import {
   insertUser,
   getUserByEmail,

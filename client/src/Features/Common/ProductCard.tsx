@@ -14,7 +14,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <>
       <Card
         className="card mt-2 mb-3 text-primary border border-primary rounded-3"
-        style={{ maxWidth: "20rem" }}
+        style={{ width: "20rem" }}
       >
         <NavLink
           to={

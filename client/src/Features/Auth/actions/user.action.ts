@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import callApi from "../../../utlils/callApi";
 
-export const registerUser = createAsyncThunk(
+export const registerUser: any = createAsyncThunk(
   "user/registerUser",
   async (data: object, { rejectWithValue }) => {
     try {
@@ -13,7 +13,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk(
+export const loginUser: any = createAsyncThunk(
   "user/loginUser",
   async (data: object, { rejectWithValue }) => {
     try {
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const getUserData = createAsyncThunk(
+export const getUserData: any = createAsyncThunk(
   "user/getUserData",
   async (_, { rejectWithValue }) => {
     try {

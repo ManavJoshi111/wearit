@@ -3,9 +3,11 @@ import { InputTags } from "react-bootstrap-tagsinput";
 import "react-bootstrap-tagsinput/dist/index.css";
 import { Container, Form, Button } from "react-bootstrap";
 import ImageUpload from "../../customComponents/ImageUpload";
-import { post } from "../../utlils/axios";
 import { useNavigate } from "react-router-dom";
 import { ErrorToast, SuccessToast } from "../../customComponents/CustomToast";
+import { addProduct } from "../../reducers/product.reducer";
+import callApi from "../../utlils/callApi";
+import { useDispatch } from "react-redux";
 
 type FormData = {
   name?: string;
@@ -15,8 +17,9 @@ type FormData = {
 };
 
 const AddProduct = () => {
-  const [formData, setFormData] = useState<FormData>({});
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [formData, setFormData] = useState<FormData>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -30,16 +33,18 @@ const AddProduct = () => {
     e: React.FormEvent<HTMLButtonElement>
   ): Promise<void> => {
     e.preventDefault();
-    console.log(formData);
     try {
-      console.log("Submitting the form: ", formData);
-      const { data } = await post("/api/product/add-product", formData);
+      const { data } = await callApi(
+        "/api/product/add-product",
+        "POST",
+        formData
+      );
       console.log("Data: ", data);
       SuccessToast(data);
+      dispatch(addProduct(data.product));
       navigate("/s/products");
     } catch (err: any) {
-      console.log("err", err.response.data.error);
-      ErrorToast(err.response.data);
+      ErrorToast(err?.response?.data);
     }
   };
 

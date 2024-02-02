@@ -7,6 +7,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "./product.controller.js";
+import { addToCart, getCart, removeFromCart } from "./cart.controller.js";
 
 export {
   register,
@@ -18,4 +19,7 @@ export {
   getProduct,
   updateProduct,
   deleteProduct,
+  addToCart,
+  getCart,
+  removeFromCart,
 };

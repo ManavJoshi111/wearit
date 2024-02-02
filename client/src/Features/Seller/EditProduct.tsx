@@ -5,6 +5,11 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { ErrorToast, SuccessToast } from "../../customComponents/CustomToast";
 import callApi from "../../utlils/callApi";
+import ProductType from "../../types/product.types";
+import { editProduct } from "../../reducers/product.reducer";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+
 const EditProductModal = ({
   show,
   handleClose,
@@ -12,15 +17,9 @@ const EditProductModal = ({
 }: {
   show: boolean;
   handleClose: () => void;
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-    quantity: number;
-    categories: string[];
-  };
+  product: ProductType;
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams<any>();
   const [formData, setFormData] = useState<any>({
     name: product?.name,
@@ -43,8 +42,7 @@ const EditProductModal = ({
         "PUT",
         formData
       );
-      console.log("Res: ", res.data.product);
-      window.location.reload();
+      dispatch(editProduct(res.data.product));
       SuccessToast(res.data);
     } catch (err: any) {
       console.log(err);

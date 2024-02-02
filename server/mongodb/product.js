@@ -30,6 +30,9 @@ export const updateProductData = async (data) => {
       $set: {
         ...data,
       },
+    },
+    {
+      returnDocument: "after",
     }
   );
 };

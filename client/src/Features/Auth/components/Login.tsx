@@ -9,6 +9,7 @@ import {
 } from "../../../customComponents/CustomToast";
 import { NavLink, useNavigate } from "react-router-dom";
 import setUserToken from "../../../utlils/setUserToken";
+import { getProducts } from "../../Common/actions/product.action";
 
 type FormData = {
   email?: string;
@@ -37,6 +38,7 @@ const Login = () => {
       SuccessToast(data);
       setUserToken(data.token);
       await dispatch(getUserData());
+      await dispatch(getProducts());
     } catch (err: any) {
       console.log("err: ", err);
       ErrorToast(err);

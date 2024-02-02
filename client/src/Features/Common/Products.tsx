@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
-import ProductCard from "../Seller/ProductCard";
-import callApi from "../../utlils/callApi";
+import React from "react";
+import ProductCard from "./ProductCard";
 import Loading from "../../utlils/Loading";
+import { useSelector } from "react-redux";
 
-const BuyerProducts: React.FC = () => {
-  const [products, setProducts] = useState<object[] | undefined>(undefined);
-
-  const fetchProducts = async () => {
-    const res = await callApi("/api/product/get-all-products", "GET");
-    setProducts(res.data.products);
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+const Products: React.FC = () => {
+  const { products } = useSelector((state: any) => state.product);
   return products ? (
     <>
       <div className="container">
         <div className="row">
           {products.length > 0 ? (
-            products.map((product, index) => {
+            products.map((product: object, index: number) => {
               return (
                 <div
                   className="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center align-items-center"
@@ -30,10 +22,7 @@ const BuyerProducts: React.FC = () => {
             })
           ) : (
             <div className="d-flex justify-content-center align-items-center flex-column w-full ">
-              <h1 className="text-primary">
-                There are not products available at this time, please try after
-                sometime!
-              </h1>
+              <h1 className="text-primary">No products found!</h1>
             </div>
           )}
         </div>
@@ -46,4 +35,4 @@ const BuyerProducts: React.FC = () => {
   );
 };
 
-export default BuyerProducts;
+export default Products;

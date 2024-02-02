@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import callApi from "../../utlils/callApi";
 import { Button, Card, Carousel } from "react-bootstrap";
 import EditProductModal from "../Seller/EditProduct";
-import deleteProduct from "../Seller/DeleteProduct";
+import DeleteProduct from "../Seller/DeleteProduct";
 import Loading from "../../utlils/Loading";
 import { useSelector } from "react-redux";
+import ProductType from "../../types/product.types";
+import Checkout from "../Buyer/AddToCart";
 
 const Product: React.FC = () => {
-  const [product, setProduct] = useState<any>(null);
-  const { user } = useSelector((state: any) => state.user);
   const { id } = useParams<any>();
+  const { user } = useSelector((state: any) => state.user);
+  const { products } = useSelector((state: any) => state.product);
+  const [product, setProduct] = useState<ProductType>(null);
 
   const [showEditProductModal, setShowEditProductModal] = useState(false);
   const handleClose = () => setShowEditProductModal(false);
   const handleShow = () => setShowEditProductModal(true);
 
-  const getProductData = async () => {
-    const res = await callApi(`/api/product/get-product/${id}`, "GET");
-    setProduct(res.data.product);
-  };
   useEffect(() => {
-    getProductData();
-  }, []);
+    if (products) {
+      const product = products.find(
+        (product: ProductType) => product?._id === id
+      );
+      setProduct(product);
+    }
+  }, [products]);
 
   return (
     <>
@@ -86,22 +89,12 @@ const Product: React.FC = () => {
                               show={showEditProductModal}
                               product={product}
                             />
-                            <Button
-                              variant="danger"
-                              onClick={() => {
-                                deleteProduct(id);
-                              }}
-                            >
-                              Delete
-                            </Button>
+                            <DeleteProduct id={product._id} />
                           </div>
                         </>
                       ) : (
                         <>
-                          <div className="d-flex justify-content-around align-items center">
-                            <Button variant="success">Add to cart</Button>
-                            <Button variant="danger">Buy now</Button>
-                          </div>
+                          <Checkout product={product} />
                         </>
                       )}
                     </Card.Body>
