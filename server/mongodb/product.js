@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { client } from "../DB/db.js";
-const Product = client.db("wearit").collection("products");
+export const Product = client.db("wearit").collection("products");
 
 // create
 export const insertProduct = async (data) => {

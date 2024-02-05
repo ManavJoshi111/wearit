@@ -108,7 +108,15 @@ const AddProduct = () => {
           }`}
         >
           {formData.imgUrls?.map((url) => (
-            <img src={url} alt="product" style={{ width: "200px" }} />
+            <div
+              className="loading-gif"
+              style={{
+                backgroundImage:
+                  "url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif')",
+              }}
+            >
+              <img src={url} alt="product" style={{ width: "200px" }} />
+            </div>
           ))}
         </div>
         <ImageUpload setFormData={setFormData} />

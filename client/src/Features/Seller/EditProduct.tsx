@@ -20,8 +20,8 @@ const EditProductModal = ({
   product: ProductType;
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { id } = useParams<any>();
-  const [formData, setFormData] = useState<any>({
+  const { id } = useParams<string>();
+  const [formData, setFormData] = useState<ProductType>({
     name: product?.name,
     price: product?.price,
     description: product?.description,
@@ -30,7 +30,7 @@ const EditProductModal = ({
   });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevState: any) => ({
+    setFormData((prevState: ProductType) => ({
       ...prevState,
       [name]: value,
     }));
@@ -63,7 +63,7 @@ const EditProductModal = ({
               <Form.Control
                 type="text"
                 name="name"
-                value={formData.name}
+                value={formData?.name}
                 placeholder="Enter name"
                 onChange={handleInputChange}
               />
@@ -73,7 +73,7 @@ const EditProductModal = ({
               <Form.Control
                 type="number"
                 name="price"
-                value={formData.price}
+                value={formData?.price}
                 placeholder="Enter price"
                 onChange={handleInputChange}
               />
@@ -83,7 +83,7 @@ const EditProductModal = ({
               <Form.Control
                 as="textarea"
                 name="description"
-                value={formData.description}
+                value={formData?.description}
                 placeholder="Enter description"
                 onChange={handleInputChange}
               />
@@ -93,7 +93,7 @@ const EditProductModal = ({
               <Form.Control
                 type="number"
                 name="quantity"
-                value={formData.quantity}
+                value={formData?.quantity}
                 placeholder="Enter quantity"
                 onChange={handleInputChange}
               />
@@ -101,9 +101,9 @@ const EditProductModal = ({
             <Form.Group className="mb-3 mt-0" controlId="formBasicCategories">
               <Form.Label className="fw-bold">Categories:</Form.Label>
               <InputTags
-                values={formData.categories}
+                values={formData?.categories}
                 onTags={(value) => {
-                  return setFormData((prevState: any) => ({
+                  return setFormData((prevState: ProductType) => ({
                     ...prevState,
                     categories: value.values,
                   }));

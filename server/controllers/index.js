@@ -7,6 +7,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "./product.controller.js";
+import { createCheckoutSession } from "./payment.controller.js";
 import { addToCart, getCart, removeFromCart } from "./cart.controller.js";
 
 export {
@@ -22,4 +23,5 @@ export {
   addToCart,
   getCart,
   removeFromCart,
+  createCheckoutSession,
 };

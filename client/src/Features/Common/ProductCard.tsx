@@ -3,13 +3,15 @@ import { Badge, Card } from "react-bootstrap";
 import Carousel from "react-bootstrap/Carousel";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import ProductType from "../../types/product.types";
+import { RootState } from "../../store";
 
 type ProductCardProps = {
-  product: any;
+  product: ProductType;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { user } = useSelector((state: any) => state.user);
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <>
       <Card
@@ -18,7 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       >
         <NavLink
           to={
-            user.type === "seller"
+            user?.type === "seller"
               ? `/s/product/${product?._id}`
               : `/product/${product?._id}`
           }
@@ -37,13 +39,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </h2>
           </Card.Header>
           <Carousel interval={null}>
-            {product?.imgUrls.map((url: string, index: number) => (
+            {product?.imgUrls?.map((url: string, index: number) => (
               <Carousel.Item key={index}>
                 <img
                   className="d-block w-100"
                   src={url}
                   alt="Product Image"
-                  style={{ height: "300px", width: "300px" }}
+                  style={{
+                    height: "300px",
+                    width: "300px",
+                    backgroundImage: "../../assets/images/loader.gif",
+                  }}
                 />
               </Carousel.Item>
             ))}
@@ -51,7 +57,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <hr className="m-0 p-0" />
           <Card.Body className="mb-0 pb-0">
             <Card.Text>
-              {product?.categories.map((category: string, index: number) => (
+              {product?.categories?.map((category: string, index: number) => (
                 <Badge bg="primary" className="me-1 rounded-pill" key={index}>
                   {category}
                 </Badge>

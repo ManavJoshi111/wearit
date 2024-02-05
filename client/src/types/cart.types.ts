@@ -1,12 +1,14 @@
+type CartProductType = {
+  productId?: string;
+  quantity?: number;
+  totalPrice?: number;
+};
+
 type CartType = {
-  products: [
-    {
-      productId: string;
-      quantity: number;
-    }
-  ];
+  products: CartProductType[];
   userId: string;
   _id: string;
+  grandTotal: number;
 };
 
 export default CartType;

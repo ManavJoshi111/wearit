@@ -2,15 +2,17 @@ import React from "react";
 import ProductCard from "./ProductCard";
 import Loading from "../../utlils/Loading";
 import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import ProductType from "../../types/product.types";
 
 const Products: React.FC = () => {
-  const { products } = useSelector((state: any) => state.product);
+  const { products } = useSelector((state: RootState) => state.product);
   return products ? (
     <>
       <div className="container">
         <div className="row">
           {products.length > 0 ? (
-            products.map((product: object, index: number) => {
+            products.map((product: ProductType, index: number) => {
               return (
                 <div
                   className="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center align-items-center"

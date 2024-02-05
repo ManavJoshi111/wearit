@@ -7,12 +7,13 @@ import Loading from "../../utlils/Loading";
 import { useSelector } from "react-redux";
 import ProductType from "../../types/product.types";
 import Checkout from "../Buyer/AddToCart";
+import { RootState } from "../../store";
 
 const Product: React.FC = () => {
-  const { id } = useParams<any>();
-  const { user } = useSelector((state: any) => state.user);
-  const { products } = useSelector((state: any) => state.product);
-  const [product, setProduct] = useState<ProductType>(null);
+  const { id } = useParams<string>();
+  const { user } = useSelector((state: RootState) => state.user);
+  const { products } = useSelector((state: RootState) => state.product);
+  const [product, setProduct] = useState<ProductType | undefined>();
 
   const [showEditProductModal, setShowEditProductModal] = useState(false);
   const handleClose = () => setShowEditProductModal(false);

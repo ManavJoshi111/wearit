@@ -1,4 +1,8 @@
-import { addToCartData, getCartData } from "../mongodb/cart.js";
+import {
+  addToCartData,
+  getCartData,
+  removeFromCartData,
+} from "../mongodb/cart.js";
 export const getCart = async (ctx) => {
   try {
     const { _id } = ctx.user;
@@ -40,8 +44,8 @@ export const addToCart = async (ctx) => {
 
 export const removeFromCart = async (ctx) => {
   try {
-    const { userId, productId } = ctx.params;
-    const cart = await removeFromCartData({ userId, productId });
+    const { productId } = ctx.params;
+    const cart = await removeFromCartData({ userId: ctx.user._id, productId });
     ctx.response.status = 200;
     ctx.response.body = {
       message: "Product removed from cart successfully!",

@@ -17,7 +17,11 @@ const initialState: CartState = {
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    updateCart: (state, action) => {
+      state.cart = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCartData.pending, (state) => {
@@ -35,4 +39,5 @@ const cartSlice = createSlice({
   },
 });
 
+export const { updateCart } = cartSlice.actions;
 export default cartSlice;

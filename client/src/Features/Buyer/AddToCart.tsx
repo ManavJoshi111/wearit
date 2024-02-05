@@ -1,23 +1,54 @@
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useRef } from "react";
 import ProductType from "../../types/product.types";
-import Loading from "../../utlils/Loading";
-// import callApi from "../../utlils/callApi";
+import { RootState } from "../../store";
+import callApi from "../../utlils/callApi";
+import { ErrorToast, SuccessToast } from "../../customComponents/CustomToast";
+import { updateCart } from "../../reducers/cart.reducer";
 
 const Checkout = ({ product }: { product: ProductType }) => {
-  const { cart } = useSelector((state: any) => state.cart);
-  const handleAddToCart = () => {};
+  const { cart } = useSelector((state: RootState) => state.cart);
+  const quantityRef = useRef<HTMLSelectElement>(null);
+  const dispatch = useDispatch();
+  const handleAddToCart = async () => {
+    const quantity = quantityRef.current?.value;
+    try {
+      const { data } = await callApi("/api/cart/add-to-cart", "POST", {
+        productId: product?._id,
+        quantity: quantity,
+      });
+      if (data?.message) {
+        SuccessToast(data?.message);
+      }
+      dispatch(updateCart(data.cart));
+    } catch (err: any) {
+      console.log(err.message);
+      ErrorToast(err);
+    }
+  };
+
+  const handleRemoveFromCart = async () => {
+    try {
+      const { data } = await callApi(
+        `/api/cart/remove-from-cart/${product?._id}`,
+        "DELETE"
+      );
+      if (data?.message) {
+        SuccessToast(data?.message);
+      }
+      dispatch(updateCart(data.cart));
+    } catch (err: any) {
+      console.log(err.message);
+      ErrorToast(err);
+    }
+  };
 
   const productExistsInCart = () => {
-    return cart[0].products?.find((item: any) => {
-      console.log("item: ", item?.productId === product?._id);
+    return cart?.products?.find((item: any) => {
       return item?.productId === product?._id;
     });
   };
-
-  if (!cart) {
-    return <Loading />;
-  }
 
   return (
     <>
@@ -25,7 +56,7 @@ const Checkout = ({ product }: { product: ProductType }) => {
         (productExistsInCart() ? (
           <>
             <div className="d-flex justify-content-around align-items center">
-              <Button variant="danger" onClick={handleAddToCart}>
+              <Button variant="danger" onClick={handleRemoveFromCart}>
                 Remove from cart
               </Button>
             </div>
@@ -37,6 +68,7 @@ const Checkout = ({ product }: { product: ProductType }) => {
               <select
                 name="quantity"
                 id="quantity"
+                ref={quantityRef}
                 className="form-select mb-2"
               >
                 {product?.quantity && +product?.quantity >= 5

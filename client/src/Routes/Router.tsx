@@ -10,6 +10,10 @@ import { USER_TYPES } from "../utlils/constants";
 import AddProduct from "../Features/Seller/AddProduct";
 import Products from "../Features/Common/Products";
 import Product from "../Features/Common/Product";
+import BuyerHome from "../Features/Buyer/Home";
+import Cart from "../Features/Buyer/Cart";
+import PaymentSuccess from "../Features/Buyer/PaymentSuccess";
+import PaymentError from "../Features/Buyer/PaymentError";
 
 const Router: React.FC = () => {
   const { BUYER, SELLER } = USER_TYPES;
@@ -36,9 +40,12 @@ const Router: React.FC = () => {
 
       {/* Buyer routes */}
       <Route path="/" element={<PrivateRoute type={BUYER} />}>
+        <Route path="" element={<BuyerHome />} />
         <Route path="products" element={<Products />} />
         <Route path="product/:id" element={<Product />} />
-        <Route path="cart" element={<BuyerDashboard />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="payment/success" element={<PaymentSuccess />} />
+        <Route path="payment/error" element={<PaymentError />} />
         <Route path="checkout" element={<BuyerDashboard />} />
         <Route path="reviews" element={<BuyerDashboard />} />
         <Route path="review/:id" element={<BuyerDashboard />} />

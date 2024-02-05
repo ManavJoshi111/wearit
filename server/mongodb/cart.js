@@ -1,29 +1,38 @@
 import { ObjectId } from "mongodb";
 import { client } from "../DB/db.js";
+import { getProductById } from "./product.js";
 
-const Cart = client.db("wearit").collection("carts");
+export const Cart = client.db("wearit").collection("carts");
 
 export const getCartData = async (userId) => {
-  return await Cart.find({ userId: new ObjectId(userId) }).toArray();
+  return await Cart.findOne({ userId: userId });
 };
 
 export const addToCartData = async ({ userId, productId, quantity }) => {
-  console.log("Userid: ", userId);
-  console.log("Productid: ", productId);
+  const product = await getProductById(productId);
+  if (!product) {
+    throw Error("Product not found!");
+  }
+  const totalPrice = product.price * quantity;
+
   const productExists = await Cart.findOne({
-    userId: new ObjectId(userId),
+    userId: userId,
     "products.productId": new ObjectId(productId),
   });
+
   if (productExists) {
-    console.log("exists");
     return await Cart.findOneAndUpdate(
       {
-        userId: new ObjectId(userId),
+        userId: userId,
         "products.productId": new ObjectId(productId),
       },
       {
         $inc: {
-          "products.$.quantity": quantity,
+          "products.$.quantity": +quantity,
+          "products.$.totalPrice": totalPrice,
+        },
+        $set: {
+          grandTotal: productExists.grandTotal + totalPrice,
         },
       },
       {
@@ -31,12 +40,18 @@ export const addToCartData = async ({ userId, productId, quantity }) => {
       }
     );
   } else {
-    console.log("doesn't exist");
     return await Cart.findOneAndUpdate(
-      { userId: new ObjectId(userId) },
+      { userId: userId },
       {
         $push: {
-          products: { productId: new ObjectId(productId), quantity: quantity },
+          products: {
+            productId: new ObjectId(productId),
+            quantity: +quantity,
+            totalPrice: totalPrice,
+          },
+        },
+        $inc: {
+          grandTotal: totalPrice,
         },
       },
       {
@@ -45,4 +60,33 @@ export const addToCartData = async ({ userId, productId, quantity }) => {
       }
     );
   }
+};
+
+export const removeFromCartData = async ({ userId, productId }) => {
+  const product = await getProductById(productId);
+  const cartProduct = await Cart.findOne({
+    userId: userId,
+    "products.productId": new ObjectId(productId),
+  });
+  const addedQuantity = cartProduct.products.find(
+    (p) => p.productId.toString() === productId
+  ).quantity;
+  if (!product || !cartProduct) {
+    throw Error("Product not found!");
+  }
+  const totalPrice = +product.price * addedQuantity;
+  return await Cart.findOneAndUpdate(
+    { userId: userId },
+    {
+      $pull: {
+        products: { productId: new ObjectId(productId) },
+      },
+      $inc: {
+        grandTotal: -totalPrice,
+      },
+    },
+    {
+      returnDocument: "after",
+    }
+  );
 };

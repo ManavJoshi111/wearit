@@ -7,6 +7,7 @@ import {
   getUserByEmailPassword,
   getUserById,
 } from "../mongodb/user.js";
+import { Cart } from "../mongodb/cart.js";
 
 export const register = async (ctx) => {
   const session = client.startSession();
@@ -34,6 +35,13 @@ export const register = async (ctx) => {
       user.companyAddress = ctx.request.body.companyAddress;
     }
     const result = await insertUser(user);
+    if (type === "buyer") {
+      await Cart.insertOne({
+        userId: result.insertedId,
+        products: [],
+        grandTotal: 0,
+      });
+    }
     const jwt = await generateJWT({ _id: result.insertedId });
     session.commitTransaction();
     ctx.response.status = 200;
@@ -83,6 +91,7 @@ export const login = async (ctx) => {
 export const getUser = async (ctx) => {
   ctx.user = await getUserById(ctx.user._id);
   ctx.response.status = 200;
+  delete ctx.user.password;
   ctx.response.body = {
     user: ctx.user,
   };
