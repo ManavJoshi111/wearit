@@ -3,6 +3,7 @@ import { CLIENT_URL, STRIPE_SECRET_KEY } from "../utils/constants.js";
 import { Cart, emptyCart, getCartData } from "../mongodb/cart.js";
 import { Product, decreaseProductQuantity } from "../mongodb/product.js";
 import { ObjectId } from "mongodb";
+import { addOrderData } from "../mongodb/order.js";
 
 export const createCheckoutSession = async (ctx) => {
   try {
@@ -44,9 +45,11 @@ export const createCheckoutSession = async (ctx) => {
 };
 
 export const paymentSuccess = async (ctx) => {
-  console.log("In payment success!");
   try {
     const { cartId } = ctx.params;
+    const cart = await getCartData(ctx.user._id);
+    delete cart._id;
+    await addOrderData(cart);
     await decreaseProductQuantity(cartId);
     await emptyCart(cartId);
     ctx.response.status = 200;

@@ -14,6 +14,7 @@ import BuyerHome from "../Features/Buyer/Home";
 import Cart from "../Features/Buyer/cart/components/Cart";
 import PaymentSuccess from "../Features/Buyer/PaymentSuccess";
 import PaymentError from "../Features/Buyer/PaymentError";
+import Orders from "../Features/Buyer/orders/Orders";
 
 const Router: React.FC = () => {
   const { BUYER, SELLER } = USER_TYPES;
@@ -46,10 +47,9 @@ const Router: React.FC = () => {
         <Route path="cart" element={<Cart />} />
         <Route path="payment/success/:id" element={<PaymentSuccess />} />
         <Route path="payment/error" element={<PaymentError />} />
-        <Route path="checkout" element={<BuyerDashboard />} />
         <Route path="reviews" element={<BuyerDashboard />} />
         <Route path="review/:id" element={<BuyerDashboard />} />
-        <Route path="orders" element={<BuyerDashboard />} />
+        <Route path="orders" element={<Orders />} />
       </Route>
 
       {/* Seller Routes */}

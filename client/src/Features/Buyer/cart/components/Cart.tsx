@@ -46,9 +46,6 @@ const Cart: React.FC = () => {
   if (error) {
     return <h1>Error: {error}</h1>;
   }
-  if (cart) {
-    console.log("Cart: ", cart);
-  }
   if (cart && cart.products && cart?.products?.length === 0) {
     return (
       <>
@@ -150,7 +147,7 @@ const Cart: React.FC = () => {
                         Grand Total:
                       </p>
                       <p className="mb-2 text-success fw-bold">
-                        ₹{cart?.grandTotal}
+                        ₹ {cart?.grandTotal}
                       </p>
                     </div>
 

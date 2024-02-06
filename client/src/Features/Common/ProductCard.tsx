@@ -69,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               {product?.companyName}
             </Card.Text>
             <Card.Text className="text-info">
-              {product?.quantity} pairs left
+              {product?.quantity} Pair(s)
             </Card.Text>
             <Card.Text className="text-danger-emphasis">
               &#8377;{product?.price}

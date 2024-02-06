@@ -18,11 +18,6 @@ const BuyerDashboard: React.FC = () => {
       icon: <i className="fas fa-shopping-cart"></i>,
     },
     {
-      name: "Checkout",
-      path: "/checkout",
-      icon: <i className="fas fa-credit-card"></i>,
-    },
-    {
       name: "Reviews",
       path: "/reviews",
       icon: <i className="fas fa-star"></i>,

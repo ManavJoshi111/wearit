@@ -15,5 +15,5 @@ router.post(
   createCheckoutSession
 );
 
-router.get("/success/:cartId", paymentSuccess);
+router.get("/success/:cartId", authenticateUser, isBuyer, paymentSuccess);
 export { router as paymentRouter };
