@@ -1,7 +1,7 @@
 const Loading = () => {
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center flex-column vw-100 vh-100">
+      <div className="d-flex justify-content-center align-items-center flex-column p-2">
         <div
           className="spinner-border text-info"
           style={{ height: "10rem", width: "10rem" }}

@@ -17,6 +17,8 @@ import {
   descriptionValidator,
 } from "./product.validator.js";
 
+import { ratingValidator, reviewValidator } from "./review.validator.js";
+
 export {
   firstNameValidator,
   lastNameValidator,
@@ -32,4 +34,6 @@ export {
   categoriesValidator,
   imgUrlsValidator,
   descriptionValidator,
+  ratingValidator,
+  reviewValidator,
 };

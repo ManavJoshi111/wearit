@@ -10,6 +10,7 @@ import {
 import { createCheckoutSession } from "./payment.controller.js";
 import { addToCart, getCart, removeFromCart } from "./cart.controller.js";
 import { getOrders } from "./order.controller.js";
+import { addReview, getProductReviews } from "./review.controller.js";
 
 export {
   register,
@@ -26,4 +27,6 @@ export {
   removeFromCart,
   createCheckoutSession,
   getOrders,
+  addReview,
+  getProductReviews,
 };

@@ -75,7 +75,7 @@ const Orders: React.FC = () => {
                     </div>
                     <div className="order-quantity">
                       <strong>Ordered On: </strong>
-                      {new Date(order.orderedTime).toLocaleDateString()}
+                      {new Date(order.orderedTime).toLocaleDateString("en-IN")}
                       &nbsp;&nbsp;
                       {new Date(order.orderedTime).toLocaleTimeString([], {
                         hour: "numeric",
