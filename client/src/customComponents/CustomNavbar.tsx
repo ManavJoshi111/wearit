@@ -13,7 +13,7 @@ const CustomNavbar: React.FC<CustomNavbarProps> = ({ links }) => {
   return (
     <>
       <Navbar bg="primary" sticky="top" variant="dark" expand="lg">
-        <Navbar.Brand href="" className="ms-3 fw-bold">
+        <Navbar.Brand as={NavLink} to="/" className="ms-3 fw-bold">
           WearIt!
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarColor02" />

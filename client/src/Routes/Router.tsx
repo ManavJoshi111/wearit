@@ -29,7 +29,9 @@ const Router: React.FC = () => {
         element={
           <>
             <h1>404 Not Found!</h1>
-            <NavLink to="/">Go to Homepage</NavLink>
+            <NavLink className="btn btn-primary" to="/">
+              Go to Homepage
+            </NavLink>
           </>
         }
       />

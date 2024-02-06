@@ -15,7 +15,7 @@ export const addReview = async (ctx) => {
     if (acknowledged) {
       data._id = insertedId;
       data.user = ctx.user;
-      createdAt: new Date();
+      data.createdAt = new Date();
     }
     ctx.response.status = 200;
     ctx.response.body = { message: "Review added successfully!", review: data };
