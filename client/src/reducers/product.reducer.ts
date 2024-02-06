@@ -29,7 +29,6 @@ const productSlice = createSlice({
     editProduct: (state, action) => {
       // state.products = [...state.products, action.payload];
       state.products = state.products?.map((product: ProductType) => {
-        console.log("action: ", action.payload);
         return product?._id === action.payload._id ? action.payload : product;
       });
     },

@@ -10,6 +10,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import setUserToken from "../../../utlils/setUserToken";
 import { getProducts } from "../../Common/actions/product.action";
+import { getCartData } from "../../Buyer/cart/actions/cart.action";
 
 type FormData = {
   email?: string;
@@ -39,6 +40,7 @@ const Login = () => {
       setUserToken(data.token);
       await dispatch(getUserData());
       await dispatch(getProducts());
+      await dispatch(getCartData());
     } catch (err: any) {
       console.log("err: ", err);
       ErrorToast(err);

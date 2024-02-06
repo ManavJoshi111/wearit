@@ -9,18 +9,19 @@ import getUserToken from "./utlils/getUserToken";
 import Router from "./Routes/Router";
 import { RootState } from "./store";
 import Loading from "./utlils/Loading";
-import { getProducts } from "./Features/Common/actions/product.action";
 import { getCartData } from "./Features/Buyer/cart/actions/cart.action";
+import { getProducts } from "./Features/Common/actions/product.action";
+
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    const getData = async () => {
+    const getData = () => {
       try {
-        await dispatch(getUserData());
-        await dispatch(getProducts());
-        await dispatch(getCartData());
+        dispatch(getUserData());
+        dispatch(getProducts());
+        dispatch(getCartData());
       } catch (err: unknown) {
         console.log("err: ", err);
       }
@@ -29,7 +30,7 @@ function App() {
     if (token) {
       getData();
     }
-  }, [dispatch]);
+  }, []);
 
   if (!getUserToken() || user) {
     return <Router />;

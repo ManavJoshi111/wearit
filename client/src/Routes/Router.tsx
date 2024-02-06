@@ -11,7 +11,7 @@ import AddProduct from "../Features/Seller/AddProduct";
 import Products from "../Features/Common/Products";
 import Product from "../Features/Common/Product";
 import BuyerHome from "../Features/Buyer/Home";
-import Cart from "../Features/Buyer/Cart";
+import Cart from "../Features/Buyer/cart/components/Cart";
 import PaymentSuccess from "../Features/Buyer/PaymentSuccess";
 import PaymentError from "../Features/Buyer/PaymentError";
 
@@ -44,7 +44,7 @@ const Router: React.FC = () => {
         <Route path="products" element={<Products />} />
         <Route path="product/:id" element={<Product />} />
         <Route path="cart" element={<Cart />} />
-        <Route path="payment/success" element={<PaymentSuccess />} />
+        <Route path="payment/success/:id" element={<PaymentSuccess />} />
         <Route path="payment/error" element={<PaymentError />} />
         <Route path="checkout" element={<BuyerDashboard />} />
         <Route path="reviews" element={<BuyerDashboard />} />

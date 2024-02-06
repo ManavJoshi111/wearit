@@ -15,8 +15,8 @@ export const addProduct = async (ctx) => {
     const product = {
       name,
       description,
-      price,
-      quantity,
+      price: +price,
+      quantity: +quantity,
       imgUrls,
       categories,
       userId: ctx.user._id,
@@ -26,8 +26,6 @@ export const addProduct = async (ctx) => {
     if (acknowledged) {
       product._id = insertedId;
     }
-    console.log("addproduct");
-
     ctx.response.status = 200;
     ctx.response.body = { message: "Product added successfully!", product };
     return;
@@ -95,6 +93,9 @@ export const getProduct = async (ctx) => {
 export const updateProduct = async (ctx) => {
   try {
     const { id } = ctx.params;
+    const { price, quantity } = ctx.request.body;
+    ctx.request.body.price = +price;
+    ctx.request.body.quantity = +quantity;
     const updatedProduct = await updateProductData({
       id,
       ...ctx.request.body,

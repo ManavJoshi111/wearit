@@ -1,13 +1,21 @@
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useRef } from "react";
-import ProductType from "../../types/product.types";
-import { RootState } from "../../store";
-import callApi from "../../utlils/callApi";
-import { ErrorToast, SuccessToast } from "../../customComponents/CustomToast";
-import { updateCart } from "../../reducers/cart.reducer";
+import ProductType from "../../../../types/product.types";
+import { RootState } from "../../../../store";
+import callApi from "../../../../utlils/callApi";
+import {
+  ErrorToast,
+  SuccessToast,
+} from "../../../../customComponents/CustomToast";
+import { updateCart } from "../../../../reducers/cart.reducer";
+import RemoveFromCart from "./RemoveFromCart";
 
-const Checkout = ({ product }: { product: ProductType }) => {
+type CartFacilityTypes = {
+  product: ProductType;
+};
+
+const CartFacility: React.FC<CartFacilityTypes> = ({ product }) => {
   const { cart } = useSelector((state: RootState) => state.cart);
   const quantityRef = useRef<HTMLSelectElement>(null);
   const dispatch = useDispatch();
@@ -18,22 +26,6 @@ const Checkout = ({ product }: { product: ProductType }) => {
         productId: product?._id,
         quantity: quantity,
       });
-      if (data?.message) {
-        SuccessToast(data?.message);
-      }
-      dispatch(updateCart(data.cart));
-    } catch (err: any) {
-      console.log(err.message);
-      ErrorToast(err);
-    }
-  };
-
-  const handleRemoveFromCart = async () => {
-    try {
-      const { data } = await callApi(
-        `/api/cart/remove-from-cart/${product?._id}`,
-        "DELETE"
-      );
       if (data?.message) {
         SuccessToast(data?.message);
       }
@@ -55,11 +47,7 @@ const Checkout = ({ product }: { product: ProductType }) => {
       {product &&
         (productExistsInCart() ? (
           <>
-            <div className="d-flex justify-content-around align-items center">
-              <Button variant="danger" onClick={handleRemoveFromCart}>
-                Remove from cart
-              </Button>
-            </div>
+            <RemoveFromCart product={product} />
           </>
         ) : (
           <>
@@ -104,4 +92,4 @@ const Checkout = ({ product }: { product: ProductType }) => {
   );
 };
 
-export default Checkout;
+export default CartFacility;

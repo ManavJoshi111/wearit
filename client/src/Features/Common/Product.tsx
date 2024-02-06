@@ -6,7 +6,7 @@ import DeleteProduct from "../Seller/DeleteProduct";
 import Loading from "../../utlils/Loading";
 import { useSelector } from "react-redux";
 import ProductType from "../../types/product.types";
-import Checkout from "../Buyer/AddToCart";
+import CartFacility from "../Buyer/cart/components/CartFacility";
 import { RootState } from "../../store";
 
 const Product: React.FC = () => {
@@ -56,9 +56,9 @@ const Product: React.FC = () => {
                 <div className="col-md-6 d-flex">
                   <Card className="w-100">
                     <Card.Body className="d-flex flex-column">
-                      <h1 className="fw-bold display-4 text-black text-uppercase">
+                      <h2 className="fw-bold display-6 text-black text-uppercase">
                         {product?.name}
-                      </h1>
+                      </h2>
                       <h3 className="fw-bold text-danger-emphasis">
                         &#8377;{product?.price}
                       </h3>
@@ -95,7 +95,7 @@ const Product: React.FC = () => {
                         </>
                       ) : (
                         <>
-                          <Checkout product={product} />
+                          <CartFacility product={product} />
                         </>
                       )}
                     </Card.Body>

@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { client } from "../DB/db.js";
+import { Cart } from "./cart.js";
 export const Product = client.db("wearit").collection("products");
 
 // create
@@ -40,4 +41,19 @@ export const updateProductData = async (data) => {
 // delete
 export const deleteProductData = async (id) => {
   return await Product.deleteOne({ _id: new ObjectId(id) });
+};
+
+export const decreaseProductQuantity = async (cartId) => {
+  const cart = await Cart.findOne({ _id: new ObjectId(cartId) });
+  console.log("cart: ", cart, cartId);
+  for (const product of cart.products) {
+    await Product.findOneAndUpdate(
+      { _id: new ObjectId(product.productId) },
+      {
+        $inc: {
+          quantity: -product.quantity,
+        },
+      }
+    );
+  }
 };

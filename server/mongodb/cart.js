@@ -5,7 +5,20 @@ import { getProductById } from "./product.js";
 export const Cart = client.db("wearit").collection("carts");
 
 export const getCartData = async (userId) => {
-  return await Cart.findOne({ userId: userId });
+  const cart = await Cart.aggregate([
+    {
+      $match: { userId: userId },
+    },
+    {
+      $lookup: {
+        from: "products",
+        localField: "products.productId",
+        foreignField: "_id",
+        as: "productsdata",
+      },
+    },
+  ]).toArray();
+  return cart[0];
 };
 
 export const addToCartData = async ({ userId, productId, quantity }) => {
@@ -87,6 +100,18 @@ export const removeFromCartData = async ({ userId, productId }) => {
     },
     {
       returnDocument: "after",
+    }
+  );
+};
+
+export const emptyCart = async (cartId) => {
+  return await Cart.findOneAndUpdate(
+    { _id: new ObjectId(cartId) },
+    {
+      $set: {
+        products: [],
+        grandTotal: 0,
+      },
     }
   );
 };

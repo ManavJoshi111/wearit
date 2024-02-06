@@ -1,18 +1,19 @@
 import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
-import { RootState } from "../../store";
-import ProductType from "../../types/product.types";
-import Loading from "../../utlils/Loading";
-import { STRIPE_PUBLIC_KEY } from "../../utlils/constants";
-import callApi from "../../utlils/callApi";
+import { RootState } from "../../../../store";
+import Loading from "../../../../utlils/Loading";
+import { STRIPE_PUBLIC_KEY } from "../../../../utlils/constants";
+import callApi from "../../../../utlils/callApi";
+import RemoveFromCart from "./RemoveFromCart";
 
 const Cart: React.FC = () => {
-  const { cart } = useSelector((state: RootState) => state.cart);
-  const { products } = useSelector((state: RootState) => state.product);
-
+  const { loading, cart, error } = useSelector(
+    (state: RootState) => state.cart
+  );
+  let validCart = 1;
   const handleCheckout = async () => {
     try {
       const stripe = await loadStripe(STRIPE_PUBLIC_KEY!);
@@ -23,7 +24,6 @@ const Cart: React.FC = () => {
           cart,
         }
       );
-      console.log("Data here: ", data);
       const result = await stripe?.redirectToCheckout({
         sessionId: data.id,
       });
@@ -36,14 +36,20 @@ const Cart: React.FC = () => {
       console.log("error in payment", err);
     }
   };
-  if (!cart) {
+  if (loading) {
     return (
       <>
         <Loading />
       </>
     );
   }
-  if (cart?.products.length === 0) {
+  if (error) {
+    return <h1>Error: {error}</h1>;
+  }
+  if (cart) {
+    console.log("Cart: ", cart);
+  }
+  if (cart && cart.products && cart?.products?.length === 0) {
     return (
       <>
         <Container className="mt-4">
@@ -70,58 +76,64 @@ const Cart: React.FC = () => {
       <Container className="mt-4">
         <Row>
           <Col lg={8}>
-            <Card className="shadow-0 m-4 border border-black border-opacity-50">
+            <Card className="shadow-0 m-3 border border-black border-opacity-50">
               <Card.Body>
                 <h4 className="card-title mb-4 fw-bold text-uppercase">
                   Your shopping cart
                 </h4>
                 {cart?.products?.map((product, index) => {
-                  const productDetails: ProductType | undefined =
-                    products?.find((p) => p?._id === product.productId);
+                  (product?.quantity ?? 0) >
+                    +(cart.productsdata?.[index]?.quantity ?? 0) &&
+                    (validCart = 0);
                   return (
-                    <div
-                      key={index}
-                      className="row gy-3 d-flex justify-content-around align-items-center m-2 p-2 border"
-                    >
-                      <div className="col-lg-7 m-0 ">
-                        <div className="me-lg-5">
-                          <div className="d-flex justify-content-around align-items-center">
-                            <img
-                              src={`${productDetails?.imgUrls || ""}`}
-                              alt="Product Demo Image"
-                              className="img-thumbnail w-50 border rounded me-3"
-                            />
-                            <h5>
+                    <>
+                      <Card className="d-flex flex-row justify-content-center align-items-center">
+                        <div className="d-flex img-div col-md-6 col-lg-6">
+                          <Card.Img
+                            className="img-thumbnail w-75 border rounded me-3"
+                            variant="top"
+                            src={`${
+                              cart.productsdata?.[index]?.imgUrls?.[0] || ""
+                            }`}
+                          />
+                        </div>
+                        <div className="product-details col-md-6 col-lg-6">
+                          <Card.Body>
+                            <Card.Title>
                               <NavLink
-                                to={`/product/${productDetails?._id}`}
-                                className="text-info text-decoration-none text-uppercase fw-bold"
+                                to={`/product/${cart.productsdata?.[index]?._id}`}
+                                className="text-info w-25 text-decoration-none text-uppercase fw-bold"
                               >
-                                {productDetails?.name}
+                                {cart.productsdata?.[index]?.name}
                               </NavLink>
-                            </h5>
-                          </div>
+                            </Card.Title>
+                            <Card.Text>
+                              Quantity: &nbsp;
+                              {(product?.quantity ?? 0) <=
+                              +(cart.productsdata?.[index]?.quantity ?? 0)
+                                ? product?.quantity
+                                : "Out of stock"}
+                            </Card.Text>
+                            <ListGroup className="">
+                              <ListGroup.Item>
+                                Total Price: ₹{product?.totalPrice}
+                              </ListGroup.Item>
+                              <ListGroup.Item>
+                                Price per Item: ₹
+                                {cart.productsdata?.[index]?.price}
+                              </ListGroup.Item>
+                            </ListGroup>
+                          </Card.Body>
+                          <Card.Body>
+                            <Card.Link className="text-decoration-none">
+                              <RemoveFromCart
+                                product={cart.productsdata?.[index]}
+                              />
+                            </Card.Link>
+                          </Card.Body>
                         </div>
-                      </div>
-                      <div className="col-lg-5 col-sm-6 col-6 d-flex justify-content-between flex-row flex-lg-column flex-xl-row text-nowrap">
-                        <div className="">
-                          <select
-                            className="form-select me-4"
-                            disabled={true}
-                            value={product?.quantity}
-                          >
-                            <option>{product?.quantity}</option>
-                          </select>
-                        </div>
-                        <div className="d-flex flex-column align-items-center">
-                          <span className="h6 text-primary mb-2">
-                            Total Price: ₹{product?.totalPrice}
-                          </span>{" "}
-                          <small className="text-muted text-nowrap">
-                            Price per Item: ₹{productDetails?.price}
-                          </small>
-                        </div>
-                      </div>
-                    </div>
+                      </Card>
+                    </>
                   );
                 })}
               </Card.Body>
@@ -129,7 +141,7 @@ const Cart: React.FC = () => {
           </Col>
 
           <Col lg={4}>
-            <Card className="shadow-0 m-4  border border-black border-opacity-50">
+            <Card className="shadow-0 m-3  border border-black border-opacity-50">
               <Card.Body>
                 <div className="card shadow-0 border">
                   <div className="card-body">
@@ -138,7 +150,6 @@ const Cart: React.FC = () => {
                         Grand Total:
                       </p>
                       <p className="mb-2 text-success fw-bold">
-                        {" "}
                         ₹{cart?.grandTotal}
                       </p>
                     </div>
@@ -147,6 +158,7 @@ const Cart: React.FC = () => {
                       <Button
                         className="btn btn-primary w-100 shadow-0 mb-2"
                         onClick={handleCheckout}
+                        disabled={!validCart}
                       >
                         Proceed To Checkout
                       </Button>
