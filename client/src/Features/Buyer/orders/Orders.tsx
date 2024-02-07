@@ -2,13 +2,9 @@ import React, { useState, useEffect } from "react";
 import callApi from "../../../utlils/callApi";
 import Loading from "../../../utlils/Loading";
 import { Accordion, Row, Col, Container } from "react-bootstrap";
-import CartType from "../../../types/cart.types";
 import ProductCard from "../../Common/ProductCard";
 import { NavLink } from "react-router-dom";
-
-type OrdersType = CartType & {
-  orderedTime: Date;
-};
+import OrdersType from "../../../types/order.types";
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<OrdersType[] | null>();

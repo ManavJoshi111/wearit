@@ -38,6 +38,7 @@ export const getProductReviewsData = async (productId) => {
         user: {
           firstName: 1,
           lastName: 1,
+          type: 1,
         },
       },
     },

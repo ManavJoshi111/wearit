@@ -46,7 +46,6 @@ const ProductReviews: React.FC<ProductReviewsType> = ({ productId }) => {
             {reviews?.length > 0 ? (
               reviews.map((review: any) => (
                 <>
-                  {console.log(review)}
                   <p key={review._id}>
                     {review.review}&nbsp;
                     <small className="text-muted">({review.rating}/5)</small>

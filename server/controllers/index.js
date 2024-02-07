@@ -9,7 +9,7 @@ import {
 } from "./product.controller.js";
 import { createCheckoutSession } from "./payment.controller.js";
 import { addToCart, getCart, removeFromCart } from "./cart.controller.js";
-import { getOrders } from "./order.controller.js";
+import { getOrders, getSellerOrders } from "./order.controller.js";
 import { addReview, getProductReviews } from "./review.controller.js";
 
 export {
@@ -29,4 +29,5 @@ export {
   getOrders,
   addReview,
   getProductReviews,
+  getSellerOrders,
 };
