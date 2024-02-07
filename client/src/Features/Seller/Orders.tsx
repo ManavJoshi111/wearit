@@ -50,10 +50,10 @@ export default class Orders extends Component {
         <Table striped bordered hover className="container">
           <thead>
             <tr>
-              <th>Order No.</th>
-              <th>Customer</th>
-              <th>Products</th>
-              <th>Amount</th>
+              <th className="h6 fw-bold">Order No.</th>
+              <th className="h6 fw-bold">Customer</th>
+              <th className="h6 fw-bold">Products</th>
+              <th className="h6 fw-bold">Amount</th>
             </tr>
           </thead>
           <tbody>

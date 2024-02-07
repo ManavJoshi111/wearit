@@ -90,7 +90,9 @@ const AddProduct = () => {
             />
           </Form.Group>
           <Form.Group className="mb-3 mt-0" controlId="formBasicCategories">
-            <Form.Label className="fw-bold">Categories:</Form.Label>
+            <Form.Label className="fw-bold">
+              Categories (seperated by spaces):
+            </Form.Label>
             <InputTags
               values={formData.categories}
               onTags={(value) => {

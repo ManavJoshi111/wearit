@@ -10,11 +10,26 @@ export const getCartData = async (userId) => {
       $match: { userId: userId },
     },
     {
+      $unwind: { path: "$products", preserveNullAndEmptyArrays: true },
+    },
+    {
       $lookup: {
         from: "products",
         localField: "products.productId",
         foreignField: "_id",
         as: "productsdata",
+      },
+    },
+    {
+      $unwind: { path: "$productsdata", preserveNullAndEmptyArrays: true },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        userId: { $first: "$userId" },
+        products: { $push: "$products" },
+        grandTotal: { $first: "$grandTotal" },
+        productsdata: { $push: "$productsdata" },
       },
     },
   ]).toArray();
@@ -34,7 +49,7 @@ export const addToCartData = async ({ userId, productId, quantity }) => {
   });
 
   if (productExists) {
-    return await Cart.findOneAndUpdate(
+    await Cart.findOneAndUpdate(
       {
         userId: userId,
         "products.productId": new ObjectId(productId),
@@ -42,10 +57,10 @@ export const addToCartData = async ({ userId, productId, quantity }) => {
       {
         $inc: {
           "products.$.quantity": +quantity,
-          "products.$.totalPrice": totalPrice,
+          "products.$.totalPrice": +totalPrice,
         },
         $set: {
-          grandTotal: productExists.grandTotal + totalPrice,
+          grandTotal: +productExists.grandTotal + +totalPrice,
         },
       },
       {
@@ -53,18 +68,18 @@ export const addToCartData = async ({ userId, productId, quantity }) => {
       }
     );
   } else {
-    return await Cart.findOneAndUpdate(
+    await Cart.findOneAndUpdate(
       { userId: userId },
       {
         $push: {
           products: {
             productId: new ObjectId(productId),
             quantity: +quantity,
-            totalPrice: totalPrice,
+            totalPrice: +totalPrice,
           },
         },
         $inc: {
-          grandTotal: totalPrice,
+          grandTotal: +totalPrice,
         },
       },
       {
@@ -73,6 +88,7 @@ export const addToCartData = async ({ userId, productId, quantity }) => {
       }
     );
   }
+  return await getCartData(userId);
 };
 
 export const removeFromCartData = async ({ userId, productId }) => {
@@ -87,8 +103,8 @@ export const removeFromCartData = async ({ userId, productId }) => {
   if (!product || !cartProduct) {
     throw Error("Product not found!");
   }
-  const totalPrice = +product.price * addedQuantity;
-  return await Cart.findOneAndUpdate(
+  const totalPrice = +product.price * +addedQuantity;
+  await Cart.findOneAndUpdate(
     { userId: userId },
     {
       $pull: {
@@ -102,6 +118,7 @@ export const removeFromCartData = async ({ userId, productId }) => {
       returnDocument: "after",
     }
   );
+  return await getCartData(userId);
 };
 
 export const emptyCart = async (cartId) => {

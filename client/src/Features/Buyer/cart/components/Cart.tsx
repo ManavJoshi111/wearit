@@ -46,7 +46,7 @@ const Cart: React.FC = () => {
   if (error) {
     return <h1>Error: {error}</h1>;
   }
-  if (cart && cart.products && cart?.products?.length === 0) {
+  if (cart && (!cart.products || cart?.products?.length === 0)) {
     return (
       <>
         <Container className="mt-4">

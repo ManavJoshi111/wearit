@@ -96,6 +96,7 @@ const Register = () => {
           <Form.Label className="fw-bold">Email:</Form.Label>
           <Form.Control
             type="email"
+            required={true}
             name="email"
             placeholder="Enter email"
             onChange={handleInputChange}
@@ -106,6 +107,7 @@ const Register = () => {
           <Form.Label className="fw-bold">Password:</Form.Label>
           <Form.Control
             type="password"
+            required={true}
             name="password"
             placeholder="Password"
             onChange={handleInputChange}
@@ -116,6 +118,7 @@ const Register = () => {
           <Form.Label className="fw-bold">Confirm Password:</Form.Label>
           <Form.Control
             type="password"
+            required={true}
             name="confirmPassword"
             placeholder="Confirm password"
             onChange={handleInputChange}
@@ -124,7 +127,12 @@ const Register = () => {
 
         <Form.Group className="mb-3" controlId="formType">
           <Form.Label className="fw-bold">Type:</Form.Label>
-          <Form.Control as="select" name="type" onChange={handleInputChange}>
+          <Form.Control
+            as="select"
+            name="type"
+            required={true}
+            onChange={handleInputChange}
+          >
             <option>Select type</option>
             <option value="buyer">Cutomer</option>
             <option value="seller">Seller</option>
@@ -136,6 +144,7 @@ const Register = () => {
               <Form.Label className="fw-bold">Company Name:</Form.Label>
               <Form.Control
                 type="text"
+                required={true}
                 name="companyName"
                 placeholder="Enter company name"
                 onChange={handleInputChange}
@@ -146,6 +155,7 @@ const Register = () => {
               <Form.Label className="fw-bold">Company Address:</Form.Label>
               <Form.Control
                 type="text"
+                required={true}
                 name="companyAddress"
                 placeholder="Enter company address"
                 onChange={handleInputChange}

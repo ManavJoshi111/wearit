@@ -78,6 +78,7 @@ const Login = () => {
           <Form.Label className="fw-bold">Email address:</Form.Label>
           <Form.Control
             type="email"
+            required={true}
             name="email"
             placeholder="Enter email"
             onChange={handleInputChange}
@@ -88,6 +89,7 @@ const Login = () => {
           <Form.Label className="fw-bold">Password:</Form.Label>
           <Form.Control
             type="password"
+            required={true}
             name="password"
             placeholder="Password"
             onChange={handleInputChange}
