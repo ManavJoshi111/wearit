@@ -12,7 +12,7 @@ Wearit! is my personal project, an e-commerce platform dedicated to shoes.
 - **Secure Checkout:** Ensure secure payment processing for purchases.
 - **Review:** Allow users to review and rate products they have purchased.
 
-# Technologies Used
+## Technologies Used
 
 - **Frontend:** HTML, CSS, JavaScript, React, Redux (Redux Tookit)
 - **Backend:** NodeJS, KoaJS
@@ -24,7 +24,7 @@ Wearit! is my personal project, an e-commerce platform dedicated to shoes.
 
 To get started with Wearit!, follow these steps:
 
-## Client
+### Client
 
 1. Clone the repository to your local machine:
    ```bash
@@ -46,11 +46,9 @@ To get started with Wearit!, follow these steps:
        yarn dev
    ```
 
-## Server
+### Server
 
 The server folder contains the Node.js backend of the application.
-
-### Installation
 
 1. Navigate to the server directory:
    ```bash
