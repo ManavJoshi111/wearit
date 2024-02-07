@@ -1,8 +1,7 @@
 import Stripe from "stripe";
 import { CLIENT_URL, STRIPE_SECRET_KEY } from "../utils/constants.js";
-import { Cart, emptyCart, getCartData } from "../mongodb/cart.js";
-import { Product, decreaseProductQuantity } from "../mongodb/product.js";
-import { ObjectId } from "mongodb";
+import { emptyCart, getCartData } from "../mongodb/cart.js";
+import { decreaseProductQuantity } from "../mongodb/product.js";
 import { addOrderData } from "../mongodb/order.js";
 
 export const createCheckoutSession = async (ctx) => {
