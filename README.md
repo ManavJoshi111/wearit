@@ -14,7 +14,7 @@ Wearit! is my personal project, an e-commerce platform dedicated to shoes.
 
 ## Technologies Used
 
-- **Frontend:** HTML, CSS, JavaScript, React, Redux (Redux Tookit)
+- **Frontend:** HTML, CSS, TypeScript, React, Redux (Redux Tookit)
 - **Backend:** NodeJS, KoaJS
 - **Database:** MongoDB
 - **Authentication:** JSON Web Tokens (JWT)
