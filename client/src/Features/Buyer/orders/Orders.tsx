@@ -82,21 +82,19 @@ const Orders: React.FC = () => {
                 </Accordion.Header>
                 <Accordion.Body>
                   <div className="d-flex justify-content-start align-items-center">
-                    {orders &&
-                      orders.map((order) => {
-                        return order.products.map((_, index) => {
-                          return (
-                            <>
-                              <ProductCard
-                                product={{
-                                  ...order.productsdata[index],
-                                  quantity: order?.products?.[index]?.quantity,
-                                  price: order?.products?.[index]?.totalPrice,
-                                }}
-                              />
-                            </>
-                          );
-                        });
+                    {order &&
+                      order?.products?.map((_, index) => {
+                        return (
+                          <>
+                            <ProductCard
+                              product={{
+                                ...order.productsdata[index],
+                                quantity: order?.products?.[index]?.quantity,
+                                price: order?.products?.[index]?.totalPrice,
+                              }}
+                            />
+                          </>
+                        );
                       })}
                   </div>
                 </Accordion.Body>
