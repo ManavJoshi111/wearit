@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getUserData, registerUser } from "../actions/user.action";
@@ -19,9 +19,23 @@ type FormData = {
   type?: string;
 };
 
+type FormFields = 'firstName' | 'lastName' | 'email' | 'password' | 'confirmPassword' | 'type' | 'companyName' | 'companyAddress';
+
+type FormError = Record<FormFields, {state:boolean, message:string}>;
+
 const Register = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const [formData, setFormData] = useState<FormData>({});
+  const [formError, setFormError] = useState<FormError>({
+    firstName: {state:false, message:''},
+  lastName: {state:false, message:''},
+  email: {state:false, message:''},
+  password: {state:false, message:''},
+  confirmPassword: {state:false, message:''},
+  type: {state:false, message:''},
+  companyName: {state:false, message:''},
+  companyAddress: {state:false, message:''},
+  });
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -31,6 +45,7 @@ const Register = () => {
       ...prevState,
       [name]: value,
     }));
+    setFormError({...formError, [name]: {state:false, message:''}})
   };
 
   const handleFormSubmit = async (
@@ -45,9 +60,19 @@ const Register = () => {
       await dispatch(getUserData());
     } catch (err: any) {
       console.log("err: ", err);
-      ErrorToast(err);
+      setFormError({...formError, [err.field]: {state: true, message: err.error}})
+      // ErrorToast(err);
     }
   };
+
+  const renderFormError = (field:FormFields):ReactNode | null => {
+    if(formError[field]?.state){
+      return <p className="text-danger">{formError[field]?.message}</p>
+    }
+    else{
+      return null;
+    }
+  }
 
   useEffect(() => {
     if (user) {
@@ -80,6 +105,9 @@ const Register = () => {
             placeholder="Enter first name"
             onChange={handleInputChange}
           />
+          {
+          renderFormError('firstName')
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formLastName">
@@ -90,6 +118,9 @@ const Register = () => {
             placeholder="Enter last name"
             onChange={handleInputChange}
           />
+          {
+            renderFormError('lastName')
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formEmail">
@@ -101,6 +132,9 @@ const Register = () => {
             placeholder="Enter email"
             onChange={handleInputChange}
           />
+          {
+            renderFormError('email')
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formPassword">
@@ -112,6 +146,9 @@ const Register = () => {
             placeholder="Password"
             onChange={handleInputChange}
           />
+          {
+            renderFormError('password')
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formConfirmPassword">
@@ -123,6 +160,9 @@ const Register = () => {
             placeholder="Confirm password"
             onChange={handleInputChange}
           />
+          {
+            renderFormError('confirmPassword')
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formType">
@@ -137,6 +177,9 @@ const Register = () => {
             <option value="buyer">Cutomer</option>
             <option value="seller">Seller</option>
           </Form.Control>
+          {
+            renderFormError('type')
+          }
         </Form.Group>
         {formData && formData.type === "seller" ? (
           <>
@@ -149,6 +192,9 @@ const Register = () => {
                 placeholder="Enter company name"
                 onChange={handleInputChange}
               />
+              {
+            renderFormError('companyName')
+          }
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formCompanyAddress">
@@ -160,6 +206,9 @@ const Register = () => {
                 placeholder="Enter company address"
                 onChange={handleInputChange}
               />
+              {
+            renderFormError('companyAddress')
+          }
             </Form.Group>
           </>
         ) : null}

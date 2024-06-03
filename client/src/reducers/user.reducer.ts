@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {ActionReducerMapBuilder, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   getUserData,
   loginUser,
@@ -23,48 +23,48 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logoutUser: (state) => {
+    logoutUser: (state: UserState) => {
       removeUserToken();
       state.user = state.loading = state.error = undefined;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder:ActionReducerMapBuilder<UserState>) => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      .addCase(registerUser.pending, (state:UserState) => {
         state.loading = true;
         state.error = undefined;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state:UserState, action:PayloadAction<any>) => {
         state.loading = undefined;
         state.user = action.payload.data;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(registerUser.rejected, (state:UserState, action) => {
         state.loading = undefined;
         state.error = action.payload as string; // ?
       });
     builder
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, (state:UserState) => {
         state.loading = true;
         state.error = undefined;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginUser.fulfilled, (state:UserState, action) => {
         state.loading = undefined;
         state.user = action.payload.data;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginUser.rejected, (state:UserState, action) => {
         state.loading = undefined;
         state.error = action.payload as string; // ?
       });
     builder
-      .addCase(getUserData.pending, (state) => {
+      .addCase(getUserData.pending, (state:UserState) => {
         state.loading = true;
         state.error = undefined;
       })
-      .addCase(getUserData.fulfilled, (state, action) => {
+      .addCase(getUserData.fulfilled, (state:UserState, action) => {
         state.loading = undefined;
         state.user = action.payload.user;
       })
-      .addCase(getUserData.rejected, (state, action) => {
+      .addCase(getUserData.rejected, (state:UserState, action) => {
         state.loading = undefined;
         state.error = action.payload as string; // ?
       });
