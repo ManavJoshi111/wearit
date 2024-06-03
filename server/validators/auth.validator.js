@@ -7,7 +7,10 @@ export const firstNameValidator = ({ firstName }) => {
     "string.min": `First name should have a minimum length of {#limit}`,
     "any.required": `First name is required`,
   });
-  return schema.validate(firstName).error?.details[0].message;
+  return {
+    field: "firstName",
+    error: schema.validate(firstName).error?.details[0].message,
+  };
 };
 
 export const lastNameValidator = ({ lastName }) => {
@@ -17,7 +20,10 @@ export const lastNameValidator = ({ lastName }) => {
     "string.min": `Last name should have a minimum length of {#limit}`,
     "any.required": `Last name is required`,
   });
-  return schema.validate(lastName).error?.details[0].message;
+  return {
+    field: "lastName",
+    error: schema.validate(lastName).error?.details[0].message,
+  };
 };
 
 export const emailValidator = ({ email }) => {
@@ -27,14 +33,16 @@ export const emailValidator = ({ email }) => {
     "string.email": `Email format is invalid`,
     "any.required": `Email is required`,
   });
-  return schema.validate(email).error?.details[0].message;
+  return {
+    field: "email",
+    error: schema.validate(email).error?.details[0].message,
+  };
 };
 
 export const passwordValidator = ({ password }) => {
   const schema = Joi.string()
     .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?=.*\d)/)
     .min(6)
-    .max(10)
     .required()
     .messages({
       "string.base": `Password should be a type of 'text'`,
@@ -43,19 +51,25 @@ export const passwordValidator = ({ password }) => {
       "string.min": `Password should have a minimum length of {#limit}`,
       "any.required": `Password is required`,
     });
-  return schema.validate(password).error?.details[0].message;
+  return {
+    field: "password",
+    error: schema.validate(password).error?.details[0].message,
+  };
 };
 
 export const confirmPasswordValidator = ({ password, confirmPassword }) => {
   if (password !== confirmPassword) {
-    return "Passwords must match";
+    return { field: "confirmPassword", error: "Passwords must match" };
   }
   return null;
 };
 
 export const typeValidator = ({ type }) => {
   const schema = Joi.string().valid("buyer", "seller").required();
-  return schema.validate(type).error?.details[0].message;
+  return {
+    field: "type",
+    error: schema.validate(type).error?.details[0].message,
+  };
 };
 
 export const companyNameValidator = ({ type, companyName }) => {
@@ -68,7 +82,10 @@ export const companyNameValidator = ({ type, companyName }) => {
           "string.min": `Company name should have a minimum length of {#limit}`,
           "any.required": `Company name is required`,
         });
-  return schema.validate(companyName).error?.details[0].message;
+  return {
+    field: "companyName",
+    error: schema.validate(companyName).error?.details[0].message,
+  };
 };
 
 export const companyAddressValidator = ({ type, companyAddress }) => {
@@ -81,5 +98,8 @@ export const companyAddressValidator = ({ type, companyAddress }) => {
           "string.min": `Company address should have a minimum length of {#limit}`,
           "any.required": `Company address is required`,
         });
-  return schema.validate(companyAddress).error?.details[0].message;
+  return {
+    field: "companyAddress",
+    error: schema.validate(companyAddress).error?.details[0].message,
+  };
 };
